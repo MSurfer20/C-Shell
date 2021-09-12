@@ -35,7 +35,6 @@ int main()
             }
             if (strcmp(command, "cd") == 0)
             {
-                printf("%d\n", i);
                 char *cd_argument;
                 if (i == 0)
                 {
