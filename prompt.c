@@ -3,7 +3,7 @@
 
 char *process_path(char *pwd, char *home_dir)
 {
-
+    // printf("PROMPT %s %s\n", pwd, home_dir);
     char temp_path[10000];
     char *processed_path = calloc(10000, sizeof(char));
     long long home_dir_length = strlen(home_dir);

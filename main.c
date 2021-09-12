@@ -5,7 +5,10 @@
 int main()
 {
     char home_dir[10000], pwd[10000];
+    char *previous_directory = calloc(10000, sizeof(char));
+    char *temp_directory = calloc(10000, sizeof(char));
     getcwd(home_dir, 10000);
+    strcpy(previous_directory, home_dir);
     if (errno == ERANGE)
     {
         perror("Prompt details");
@@ -46,7 +49,9 @@ int main()
                 {
                     perror("Invalid arguments given for cd");
                 }
-                cd(pwd, home_dir, cd_argument);
+                strcpy(temp_directory, pwd);
+                cd(pwd, home_dir, cd_argument, previous_directory);
+                strcpy(previous_directory, temp_directory);
             }
 
             each_command = strtok(NULL, ";");
