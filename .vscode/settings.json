@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "cd.h": "c",
+        "headers.h": "c",
+        "prompt.h": "c"
+    }
+}
