@@ -1,6 +1,7 @@
 #include "prompt.h"
 #include "headers.h"
 #include "cd.h"
+#include "echo.h"
 
 int main()
 {
@@ -20,21 +21,26 @@ int main()
         char all_commands[10000];
         scanf("%[^\n]%*c", all_commands);
         char *each_command;
+        char *savepointer1, *savepointer2;
 
-        each_command = strtok(all_commands, ";");
+        each_command = strtok_r(all_commands, ";", &savepointer1);
 
         while (each_command != NULL)
         {
-            char *token = strtok(each_command, " ");
+            char *token = strtok_r(each_command, " \t", &savepointer2);
             char *command = token;
             char *args[100];
             int i = 0;
-            token = strtok(NULL, " ");
+            token = strtok_r(NULL, " \t", &savepointer2);
             while (token != NULL)
             {
                 args[i] = token;
                 i++;
-                token = strtok(NULL, " ");
+                token = strtok_r(NULL, " \t", &savepointer2);
+            }
+            if (strcmp(command, "echo") == 0)
+            {
+                echo(args, i);
             }
             if (strcmp(command, "cd") == 0)
             {
@@ -47,14 +53,15 @@ int main()
                     cd_argument = args[0];
                 else
                 {
-                    perror("Invalid arguments given for cd");
+                    printf("Error: Invalid arguments given for cd\n");
+                    continue;
                 }
                 strcpy(temp_directory, pwd);
                 cd(pwd, home_dir, cd_argument, previous_directory);
                 strcpy(previous_directory, temp_directory);
             }
 
-            each_command = strtok(NULL, ";");
+            each_command = strtok_r(NULL, ";", &savepointer1);
         }
 
         // TAKE INPUT HERE
