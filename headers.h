@@ -5,3 +5,8 @@
 #include <pwd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <grp.h>
+#include <time.h>

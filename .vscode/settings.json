@@ -2,6 +2,8 @@
     "files.associations": {
         "cd.h": "c",
         "headers.h": "c",
-        "prompt.h": "c"
+        "prompt.h": "c",
+        "echo.h": "c",
+        "ls.h": "c"
     }
 }
