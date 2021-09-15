@@ -1,4 +1,4 @@
-#include "headers.h"
+#include <stdbool.h>
 #ifndef __LS_H
 #define __LS_H
 

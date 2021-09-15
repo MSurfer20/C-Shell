@@ -10,3 +10,14 @@
 #include <dirent.h>
 #include <grp.h>
 #include <time.h>
+#include <wait.h>
+
+struct bg_process
+{
+    char **agrv;
+    pid_t pid;
+};
+
+struct bg_process bg_jobs[1000];
+
+int proc_no;

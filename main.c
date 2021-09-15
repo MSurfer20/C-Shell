@@ -4,9 +4,11 @@
 #include "echo.h"
 #include "pwd.h"
 #include "ls.h"
+#include "process.h"
 
 int main()
 {
+    proc_no = 0;
     char home_dir[10000], pwd[10000];
     char *previous_directory = calloc(10000, sizeof(char));
     char *temp_directory = calloc(10000, sizeof(char));
@@ -96,6 +98,7 @@ int main()
 
             else
             {
+                printf("BRUH");
                 bool backround_process = false;
                 if (i > 0)
                 {
@@ -107,7 +110,7 @@ int main()
                         if (strlen(args[i - 1]) == 0)
                         {
                             i--;
-                            free(args[i]);
+                            // free(args[i]);
                             args[i] = NULL;
                         }
                     }
@@ -117,8 +120,8 @@ int main()
                         if (command[cmd_len - 1] == '&')
                             command[cmd_len - 1] = '\0', backround_process = true;
                     }
-                    execute_process(command, i, args, backround_process);
                 }
+                execute_process(command, i, args, backround_process);
             }
 
             each_command = strtok_r(NULL, ";", &savepointer1);

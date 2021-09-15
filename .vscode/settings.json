@@ -4,6 +4,7 @@
         "headers.h": "c",
         "prompt.h": "c",
         "echo.h": "c",
-        "ls.h": "c"
+        "ls.h": "c",
+        "stdio.h": "c"
     }
 }
