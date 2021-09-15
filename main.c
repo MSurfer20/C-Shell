@@ -5,6 +5,7 @@
 #include "pwd.h"
 #include "ls.h"
 #include "process.h"
+#include "pinfo.h"
 
 int main()
 {
@@ -94,6 +95,18 @@ int main()
                 strcpy(temp_directory, pwd);
                 cd(pwd, home_dir, cd_argument, previous_directory);
                 strcpy(previous_directory, temp_directory);
+            }
+
+            else if (strcmp(command, "pinfo") == 0)
+            {
+                pid_t pid;
+                if (i == 0)
+                {
+                    pid = getpid();
+                }
+                else
+                    pid = atoi(args[0]);
+                pinfo(pid, home_dir);
             }
 
             else
