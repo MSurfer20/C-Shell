@@ -78,6 +78,15 @@ void execute_command(char *command, char **args, int i)
         pinfo(pid, home_dir);
     }
 
+    else if (strcmp(command, "repeat") == 0)
+    {
+        int command_count = atoi(args[0]);
+        for (int x = 0; x < command_count; x++)
+        {
+            execute_command(args[1], args + 2, i - 2);
+        }
+    }
+
     else
     {
         printf("BRUH");
