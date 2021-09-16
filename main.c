@@ -19,6 +19,7 @@ int main()
     {
         perror("Prompt details");
     }
+    signal(SIGCHLD, finish_proc);
     while (1)
     {
         getcwd(pwd, 10000);

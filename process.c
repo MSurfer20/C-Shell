@@ -47,3 +47,41 @@ void execute_process(char *command, int i, char **args, bool backround_process)
         }
     }
 }
+
+void finish_proc()
+{
+    printf("YAYYYYYYYYYY");
+    int status;
+    bool flag = false;
+    char **argv;
+    pid_t pid = waitpid(-1, &status, WNOHANG);
+    // if (pid < 0)
+    //     return;
+    for (int x = 0; x < proc_no - 1; x++)
+    {
+        if (bg_jobs[x].pid == pid)
+        {
+            flag = true;
+            argv = bg_jobs[x].agrv;
+
+            for (int y = x; y < proc_no - 1; y++)
+            {
+                bg_jobs[y].agrv = bg_jobs[y + 1].agrv;
+                bg_jobs[y].pid = bg_jobs[y + 1].pid;
+            }
+            proc_no--;
+            printf("BROOOOOOOOOOO");
+
+            break;
+        }
+    }
+
+    if (!flag)
+        return;
+    if (!WEXITSTATUS(status) && WIFEXITED(status))
+        printf("%s with PID %d exited normally.\n", argv[0], pid);
+    else
+        printf("%s with PID %d did not exit normally.\n", argv[0], pid);
+    fflush(stdout);
+    fflush(stdin);
+}
