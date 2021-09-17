@@ -6,6 +6,7 @@
         "echo.h": "c",
         "ls.h": "c",
         "stdio.h": "c",
-        "process.h": "c"
+        "process.h": "c",
+        "history.h": "c"
     }
 }

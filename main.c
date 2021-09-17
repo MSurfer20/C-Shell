@@ -183,9 +183,11 @@ int main()
 
     char *all_commands = malloc(sizeof(char) * 100);
     char c;
+    int prev_command_no = 0;
 
     while (1)
     {
+        prev_command_no = 0;
         getcwd(pwd, 10000);
         prompt(pwd, home_dir);
 
@@ -206,8 +208,17 @@ int main()
                     if (read(STDIN_FILENO, buf, 2) == 2)
                     { // length of escape code
                         printf("\r");
+                        for (int x = 0; x < 100; x++)
+                            printf(" ");
+                        printf("\r");
                         prompt(pwd, home_dir);
-                        printf("YAY");
+                        prev_command_no++;
+                        char *history_command = get_nth_history(prev_command_no);
+                        pt = strlen(history_command);
+                        strcpy(all_commands, history_command);
+                        all_commands[pt] = '\0';
+                        printf("%s", history_command);
+                        free(history_command);
                     }
                 }
                 else if (c == 127)
@@ -249,6 +260,7 @@ int main()
             }
         }
         disableRawMode();
+        all_commands[pt] = '\0';
 
         char *each_command;
         char *savepointer1, *savepointer2;

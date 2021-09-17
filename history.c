@@ -63,3 +63,28 @@ void add_history(char *command)
     fputs(command, append_file);
     fclose(append_file);
 }
+
+char *get_nth_history(int n)
+{
+    FILE *read_file = fopen("./history.txt", "r");
+    char *return_str = calloc(1000, sizeof(char));
+    char line[1000];
+    int command_count = 0;
+    char last_command[10000];
+    char history_commands[20][1000];
+
+    while (fgets(line, sizeof(line), read_file))
+    {
+        strcpy(history_commands[command_count], line);
+        command_count++;
+    }
+    fclose(read_file);
+    int a = command_count - n;
+    if (a < 0)
+        strcpy(return_str, history_commands[0]);
+    else
+        strcpy(return_str, history_commands[a]);
+    if (return_str[strlen(return_str) - 1] == '\n')
+        return_str[strlen(return_str) - 1] = '\0';
+    return return_str;
+}
