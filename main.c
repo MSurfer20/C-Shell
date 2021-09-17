@@ -265,7 +265,6 @@ int main()
         char *each_command;
         char *savepointer1, *savepointer2;
         add_history(all_commands);
-        printf("INPUT: [%s]", all_commands);
 
         each_command = strtok_r(all_commands, ";", &savepointer1);
 

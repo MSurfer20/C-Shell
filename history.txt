@@ -18,7 +18,7 @@ ls
 
 
 
-dsadasdas0cd .
-ls dasdas0
-dsadasdas0
+lsdsadasdas0
 cd ..
+ls
+vim abc.c
