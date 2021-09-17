@@ -11,6 +11,8 @@
 #include <grp.h>
 #include <time.h>
 #include <wait.h>
+#include <ctype.h>
+#include <termios.h>
 
 struct bg_process
 {

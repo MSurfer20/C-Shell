@@ -3,7 +3,6 @@
 
 void execute_process(char *command, int i, char **args, bool backround_process)
 {
-    printf("YASSSSSSSS");
     fflush(stdin);
     printf("%d\n", (int)backround_process);
     char *exec_arguments[i + 2];

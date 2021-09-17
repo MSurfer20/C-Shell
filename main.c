@@ -12,6 +12,50 @@ char home_dir[10000], pwd[10000];
 char previous_directory[10000];
 char temp_directory[10000];
 
+void die(const char *s)
+{
+    perror(s);
+    exit(1);
+}
+
+struct termios orig_termios;
+
+void disableRawMode()
+{
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
+        die("tcsetattr");
+}
+
+/**
+ * Enable row mode for the terminal
+ * The ECHO feature causes each key you type to be printed to the terminal, so you can see what you’re typing.
+ * Terminal attributes can be read into a termios struct by tcgetattr().
+ * After modifying them, you can then apply them to the terminal using tcsetattr().
+ * The TCSAFLUSH argument specifies when to apply the change: in this case, it waits for all pending output to be written to the terminal, and also discards any input that hasn’t been read.
+ * The c_lflag field is for “local flags”
+ */
+void enableRawMode()
+{
+    if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
+        die("tcgetattr");
+    atexit(disableRawMode);
+    struct termios raw = orig_termios;
+    raw.c_lflag &= ~(ICANON | ECHO);
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+        die("tcsetattr");
+}
+
+/**
+ * stdout and stdin are buffered we disable buffering on that
+ * After entering in raw mode we read characters one by one
+ * Up arrow keys and down arrow keys are represented by 3 byte escape codes
+ * starting with ascii number 27 i.e. ESC key
+ * This way we interpret arrow keys
+ * Tabs are usually handled by the term, but here we are simulating tabs for the sake of simplicity
+ * Backspace move the cursor one control character to the left
+ * @return
+ */
+
 void execute_command(char *command, char **args, int i)
 {
     if (strcmp(command, "echo") == 0)
@@ -136,15 +180,80 @@ int main()
         perror("Prompt details");
     }
     signal(SIGCHLD, finish_proc);
+
+    char *all_commands = malloc(sizeof(char) * 100);
+    char c;
+
     while (1)
     {
         getcwd(pwd, 10000);
         prompt(pwd, home_dir);
-        char all_commands[10000];
-        scanf("%[^\n]%*c", all_commands);
+
+        setbuf(stdout, NULL);
+        enableRawMode();
+        memset(all_commands, '\0', 100);
+        int pt = 0;
+        while (read(STDIN_FILENO, &c, 1) == 1)
+        {
+            if (iscntrl(c))
+            {
+                if (c == 10)
+                    break;
+                else if (c == 27)
+                {
+                    char buf[3];
+                    buf[2] = 0;
+                    if (read(STDIN_FILENO, buf, 2) == 2)
+                    { // length of escape code
+                        printf("\r");
+                        prompt(pwd, home_dir);
+                        printf("YAY");
+                    }
+                }
+                else if (c == 127)
+                { // backspace
+                    if (pt > 0)
+                    {
+                        if (all_commands[pt - 1] == 9)
+                        {
+                            for (int i = 0; i < 7; i++)
+                            {
+                                printf("\b");
+                            }
+                        }
+                        all_commands[--pt] = '\0';
+                        printf("\b \b");
+                    }
+                }
+                else if (c == 9)
+                { // TAB character
+                    all_commands[pt++] = c;
+                    for (int i = 0; i < 8; i++)
+                    { // TABS should be 8 spaces
+                        printf(" ");
+                    }
+                }
+                else if (c == 4)
+                {
+                    exit(0);
+                }
+                else
+                {
+                    printf("%d\n", c);
+                }
+            }
+            else
+            {
+                all_commands[pt++] = c;
+                printf("%c", c);
+            }
+        }
+        disableRawMode();
+
         char *each_command;
         char *savepointer1, *savepointer2;
         add_history(all_commands);
+        printf("INPUT: [%s]", all_commands);
 
         each_command = strtok_r(all_commands, ";", &savepointer1);
 
