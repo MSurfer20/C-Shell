@@ -21,4 +21,4 @@ struct bg_process
 struct bg_process bg_jobs[1000];
 
 int proc_no;
-int counter;
+bool restart_loop;

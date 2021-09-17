@@ -6,6 +6,7 @@
 #include "ls.h"
 #include "process.h"
 #include "pinfo.h"
+#include "history.h"
 
 char home_dir[10000], pwd[10000];
 char previous_directory[10000];
@@ -87,6 +88,11 @@ void execute_command(char *command, char **args, int i)
         }
     }
 
+    else if (strcmp(command, "history") == 0)
+    {
+        // add_history("10");
+    }
+
     else
     {
         printf("BRUH");
@@ -135,6 +141,7 @@ int main()
         scanf("%[^\n]%*c", all_commands);
         char *each_command;
         char *savepointer1, *savepointer2;
+        add_history(all_commands);
 
         each_command = strtok_r(all_commands, ";", &savepointer1);
 
@@ -156,7 +163,9 @@ int main()
 
             each_command = strtok_r(NULL, ";", &savepointer1);
         }
+        fflush(stdin);
 
         // TAKE INPUT HERE
+        // free(all_commands);
     }
 }
