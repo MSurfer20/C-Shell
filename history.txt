@@ -1,20 +1,20 @@
-asd
-vfdfsd
-a
-asdsa
-gfdghdfh
-lkthsk
-ksahfksa
-lkjjhaks
-lkjsdakf
-lsdafjlsdj
-a
-g
-d
-nm
-rewr
-fazf
-bzdfhfdg
-lghskdlf
 ls
-asdasd
+history
+history 3
+history 10
+history 2
+ls
+history
+history 2
+history 6
+history 5
+history 10
+history 12
+history 20
+ls ..
+history
+cd ..
+vim &
+vim
+vim &
+ls

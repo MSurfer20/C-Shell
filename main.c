@@ -91,11 +91,14 @@ void execute_command(char *command, char **args, int i)
     else if (strcmp(command, "history") == 0)
     {
         // add_history("10");
+        if (i == 0)
+            history(10);
+        else
+            history(atoi(args[0]));
     }
 
     else
     {
-        printf("BRUH");
         bool backround_process = false;
         if (i > 0)
         {
