@@ -1,20 +1,20 @@
-./a.out 10 20 30 40
-./a.out
-./a.out 1
-./a.out 1 2 3 4
-./a.out 12 12
-./a.out 1 2
-./a.out 1 2 3
-./a.out 1 2 23 4
-./a.out 1 2 3 4
-./a.out 1 2 34
-./a.out 1 2 3
-./a.out 1 2 3 4
-repeat 10 ./a.out
-repeat 10 ./a.out 1 2 3 4
-./a.out 1 2 3 4 56
 repeat 10 gedit &
 repeat 10 gedit
 repeat 10 gedit &
 repeat 10 ./a.out &
 repeat 10 ./a.out 1 2 3 4
+repeat 20 ./a.out 1 2 3 4 5 6
+repeat 10 gedit &
+repeat 10 ./a.out 1 2 3 4 5 &
+repeat 10 gedit &
+gedit &
+repeat 10 gedit &
+gedit &
+vim &
+dasdas
+repeat 10 gedit &
+gedit &
+repeat 10 gedit &
+repeat 40 gedit &
+repeat 10 gedit &
+repeat 100 gedit &

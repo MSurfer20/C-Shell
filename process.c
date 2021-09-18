@@ -47,13 +47,11 @@ void execute_process(char *command, int i, char **args, bool backround_process)
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
         }
     }
-    printf("AAAAAAAAAAAAAAAAAAa\n");
     return;
 }
 
 void finish_proc()
 {
-    printf("BBBBBBBBBBBBBBBBBBB\n");
     int status;
     bool flag = false;
     char **argv;
@@ -74,11 +72,6 @@ void finish_proc()
                 }
                 proc_no--;
                 int cur_rem = 0;
-                // while (argv[cur_rem] != NULL)//TODO: SEGFAULT
-                // {
-                //     free(argv[cur_rem]);
-                //     cur_rem++;
-                // }
                 break;
             }
         }

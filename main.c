@@ -142,10 +142,23 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "repeat") == 0)
     {
+        char *pass_command[100];
         int command_count = atoi(args[0]);
         for (int x = 0; x < command_count; x++)
         {
-            execute_command(args[1], args + 2, i - 2, history_file);
+            for (int y = 2; y < i; y++)
+            {
+                pass_command[y - 2] = calloc(strlen(args[y]), sizeof(char));
+                strcpy(pass_command[y - 2], args[y]);
+            }
+            int bc = i - 2;
+            if (i - 2 < 0)
+                bc = 0;
+            execute_command(args[1], pass_command, bc, history_file);
+            for (int y = 2; y < i; y++)
+            {
+                free(pass_command[y - 2]);
+            }
         }
     }
 
@@ -168,8 +181,9 @@ void execute_command(char *command, char **args, int i, char *history_file)
             {
                 args[i - 1][arg_length - 1] = '\0';
                 backround_process = true;
-                if (strlen(args[i - 1]) == 0)
+                if (arg_length == 1)
                 {
+                    args[i - 1] = NULL;
                     i--;
                 }
             }
