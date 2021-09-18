@@ -1,20 +1,20 @@
+gedit&
+gedit file &
 gedit &
-vim &
-dasdas
-repeat 10 gedit &
-gedit &
-repeat 10 gedit &
-repeat 40 gedit &
-repeat 10 gedit &
-repeat 100 gedit &
 ls
-repeat 100 gedit& fil
-repeat 100 gedit&
+gitk&
+gedit&
+gedit &
+ls
 gedit&
 repeat 10 gedit&
-repeat 100 gedit&
-ls
-ls -al
-clear
-which clear
-ls -a
+repeat 20 ./a.out 1 2 3
+repeat 20 ./a.out 1 2 3 &
+repeat 10 ./a.out 1 2 3 55
+repeat 1000 ./a.out 1 2
+repeat 1000 ./a.out 1 2 &
+./a.out 1 2 3 &
+./a.out 1 2 3 4 &
+repeat 10 ./a.out 1 2 3 4 &
+gedit&
+repeat 10 gedit &

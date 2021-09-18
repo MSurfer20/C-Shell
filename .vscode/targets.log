@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Sep 18 16:25:23 2021
+# Make data base, printed on Sat Sep 18 18:08:57 2021
 
 # Variables
 
@@ -71,7 +71,7 @@ MANAGERPID = 2824
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-5549df6c-3dfd-42e3-8f69-acf0bf723d3c.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fd9275ec-7841-4f51-add6-1dd688553f62.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
@@ -103,7 +103,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5702
+GIO_LAUNCHED_DESKTOP_FILE_PID = 53214
 # automatic
 %F = $(notdir $%)
 # environment
@@ -125,7 +125,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProce
 # environment
 HOME = /home/suyash
 # environment
-VSCODE_CODE_CACHE_PATH = /home/suyash/.config/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
+VSCODE_CODE_CACHE_PATH = /home/suyash/.config/Code/CachedData/83bd43bc519d15e50c4272c6cf5c1479df196a4d
 # environment
 LOGNAME = suyash
 # environment
@@ -173,7 +173,7 @@ OLDPWD = /home/suyash
 # environment
 LANGUAGE = en_IN:en
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-8d32fbe9-1.59.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-8d32fbe9-1.60.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -194,8 +194,6 @@ QT_ACCESSIBILITY = 1
 DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
 # default
 MAKEFILES := 
-# environment
-VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # automatic
 <F = $(notdir $<)
 # environment
@@ -223,9 +221,9 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5702
+VSCODE_PID = 53214
 # variable set hash-table stats:
-# Load=107/1024=10%, Rehash=0, Collisions=13/132=10%
+# Load=106/1024=10%, Rehash=0, Collisions=13/131=10%
 
 # Pattern-specific Variable Values
 
@@ -280,13 +278,13 @@ default:
 
 # strcache buffers: 1 (0) / strings = 43 / storage = 333 B / avg = 7 B
 # current buf: size = 8162 B / used = 333 B / count = 43 / avg = 7 B
- 
-make: *** No rule to make target 'all'.  Stop.
- 
 
 # strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
+ 
+make: *** No rule to make target 'all'.  Stop.
+ 
 # Load=43/8192=1%, Rehash=0, Collisions=1/48=2%
-# Finished Make data base on Sat Sep 18 16:25:23 2021
+# Finished Make data base on Sat Sep 18 18:08:57 2021
 
  

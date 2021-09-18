@@ -36,10 +36,16 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     {
         if (backround_process)
         {
-            bg_jobs[proc_no].agrv = exec_arguments;
+            bg_jobs[proc_no].agrv = calloc(i, sizeof(char *));
+            for (int y = 0; y < i + 1; y++)
+            {
+                bg_jobs[proc_no].agrv[y] = calloc(strlen(exec_arguments[y]) + 10, sizeof(char));
+                strcpy(bg_jobs[proc_no].agrv[y], exec_arguments[y]);
+            }
+            bg_jobs[proc_no].agrv[i + 2] = NULL;
             bg_jobs[proc_no].pid = pid;
+            bg_jobs[proc_no].number_of_args = i + 1;
             proc_no++;
-            printf("%d\n", pid);
         }
         else
         {
@@ -47,6 +53,8 @@ void execute_process(char *command, int i, char **args, bool backround_process)
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
         }
     }
+    for (int y = 0; y < i + 1; y++)
+        free(exec_arguments[y]);
     return;
 }
 
@@ -55,7 +63,10 @@ void finish_proc()
     int status;
     bool flag = false;
     char **argv;
+    char *pname;
     pid_t pid;
+    int number_of_remove_args = 0;
+    int job_index = 0;
     while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
     {
         for (int x = 0; x < proc_no; x++)
@@ -64,6 +75,7 @@ void finish_proc()
             {
                 flag = true;
                 argv = bg_jobs[x].agrv;
+                number_of_remove_args = bg_jobs[x].number_of_args;
 
                 for (int y = x; y < proc_no - 1; y++)
                 {
@@ -77,12 +89,18 @@ void finish_proc()
         }
 
         if (!flag)
-            return;
+            continue;
+        // for (int x = 0; x < 10; x++)
+        //     printf("%s", argv[x]);
         if (!WEXITSTATUS(status) && WIFEXITED(status))
-            printf("%s with PID %d exited normally.\n", argv[1], pid);
+            printf("%s with PID %d exited normally.\n", argv[0], pid);
         else
-            printf("%s with PID %d did not exit normally.\n", argv[1], pid);
+            printf("%s with PID %d did not exit normally.\n", argv[0], pid);
+
         restart_loop = true;
+        for (int y = 0; y < number_of_remove_args; y++)
+            free(argv[y]);
+        free(argv);
         fflush(stdin);
         fflush(stdout);
     }
