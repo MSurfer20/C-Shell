@@ -187,13 +187,10 @@ void execute_command(char *command, char **args, int i, char *history_file)
                     i--;
                 }
             }
-            else
-            {
-                int cmd_len = strlen(command);
-                if (command[cmd_len - 1] == '&')
-                    command[cmd_len - 1] = '\0', backround_process = true;
-            }
         }
+        int cmd_len = strlen(command);
+        if (command[cmd_len - 1] == '&')
+            command[cmd_len - 1] = '\0', backround_process = true;
         execute_process(command, i, args, backround_process);
     }
 }
