@@ -1,20 +1,18 @@
-cd ..
 ls
-ls -al
+cd ..
+cat file
 cd StarterCode
-cd ..
-ls
-ls -al
-ls -a
-ls -l
-vim
-vi
-gedit &
-ls -al
-vim &
-gedit &
-pinfo 85059
-./a.out &
-pinfo 85156
-	dsadas
+cat header.h
+cat pwd.c
 cd ~
+cd StarterCode
+cd test
+cd ~
+cd -
+repeat 10000 cd .
+gedit &
+gedit 90456
+pinfo 90456
+gedit
+pinfo 90783
+pinfo 96024

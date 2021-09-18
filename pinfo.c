@@ -41,7 +41,12 @@ void pinfo(pid_t pid, char *home_dir)
         return;
     }
     fscanf(file_ptr, "%s %s %s", a, b, c);
-    printf("Process Status -- %s\n", c);
+    printf("Process Status -- %s", c);
+    if (getpgid(pid) == tcgetpgrp(STDIN_FILENO))
+    {
+        printf("+");
+    }
+    printf("\n");
     strcpy(proc_file, proc_name);
     strcat(proc_file, "/status");
     fclose(file_ptr);

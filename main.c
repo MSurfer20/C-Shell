@@ -56,7 +56,7 @@ void enableRawMode()
  * @return
  */
 
-void execute_command(char *command, char **args, int i)
+void execute_command(char *command, char **args, int i, char *history_file)
 {
     if (strcmp(command, "echo") == 0)
     {
@@ -143,7 +143,7 @@ void execute_command(char *command, char **args, int i)
         int command_count = atoi(args[0]);
         for (int x = 0; x < command_count; x++)
         {
-            execute_command(args[1], args + 2, i - 2);
+            execute_command(args[1], args + 2, i - 2, history_file);
         }
     }
 
@@ -151,9 +151,9 @@ void execute_command(char *command, char **args, int i)
     {
         // add_history("10");
         if (i == 0)
-            history(10);
+            history(10, history_file);
         else
-            history(atoi(args[0]));
+            history(atoi(args[0]), history_file);
     }
 
     else
@@ -195,6 +195,9 @@ int main()
         perror("Prompt details");
     }
     signal(SIGCHLD, finish_proc);
+    char *history_file = calloc(1000, sizeof(char));
+    strcpy(history_file, home_dir);
+    strcat(history_file, "/history.txt");
 
     char *all_commands = malloc(sizeof(char) * 100);
     char c;
@@ -230,7 +233,7 @@ int main()
                             printf("\r");
                             prompt(pwd, home_dir);
                             prev_command_no++;
-                            char *history_command = get_nth_history(prev_command_no);
+                            char *history_command = get_nth_history(prev_command_no, history_file);
                             pt = strlen(history_command);
                             strcpy(all_commands, history_command);
                             all_commands[pt] = '\0';
@@ -283,7 +286,7 @@ int main()
 
         char *each_command;
         char *savepointer1, *savepointer2;
-        add_history(all_commands);
+        add_history(all_commands, history_file);
 
         each_command = strtok_r(all_commands, ";", &savepointer1);
 
@@ -301,7 +304,7 @@ int main()
                 token = strtok_r(NULL, " \t", &savepointer2);
             }
 
-            execute_command(command, args, i);
+            execute_command(command, args, i, history_file);
 
             each_command = strtok_r(NULL, ";", &savepointer1);
         }

@@ -51,7 +51,6 @@ void execute_process(char *command, int i, char **args, bool backround_process)
 
 void finish_proc()
 {
-    printf("YAYYYYYYYYYY");
     int status;
     bool flag = false;
     char **argv;
@@ -71,7 +70,6 @@ void finish_proc()
                 bg_jobs[y].pid = bg_jobs[y + 1].pid;
             }
             proc_no--;
-            printf("BROOOOOOOOOOO");
 
             break;
         }
