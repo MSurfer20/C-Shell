@@ -46,11 +46,13 @@ void execute_process(char *command, int i, char **args, bool backround_process)
             bg_jobs[proc_no].pid = pid;
             bg_jobs[proc_no].number_of_args = i + 1;
             proc_no++;
+            printf("%d\n", pid);
         }
         else
         {
             int status;
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
+            printf("\n");
         }
     }
     for (int y = 0; y < i + 1; y++)
@@ -95,7 +97,7 @@ void finish_proc()
         if (!WEXITSTATUS(status) && WIFEXITED(status))
             printf("%s with PID %d exited normally.\n", argv[0], pid);
         else
-            printf("%s with PID %d did not exit normally.\n", argv[0], pid);
+            printf("%s with PID %d exited abnormally.\n", argv[0], pid);
 
         restart_loop = true;
         for (int y = 0; y < number_of_remove_args; y++)

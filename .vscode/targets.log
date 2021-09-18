@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+ 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Sep 18 18:08:57 2021
+# Make data base, printed on Sat Sep 18 23:25:06 2021
 
 # Variables
 
@@ -71,7 +73,7 @@ MANAGERPID = 2824
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fd9275ec-7841-4f51-add6-1dd688553f62.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-bf629cb8-1d1e-4af1-887c-eaebdfacfd11.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
@@ -103,7 +105,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 53214
+GIO_LAUNCHED_DESKTOP_FILE_PID = 77132
 # automatic
 %F = $(notdir $%)
 # environment
@@ -221,7 +223,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 53214
+VSCODE_PID = 77132
 # variable set hash-table stats:
 # Load=106/1024=10%, Rehash=0, Collisions=13/131=10%
 
@@ -231,9 +233,9 @@ VSCODE_PID = 53214
 
 # Directories
 
-# . (device 2050, inode 20972362): 37 files, no impossibilities.
+# . (device 2050, inode 20972362): 38 files, no impossibilities.
 
-# 37 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -276,15 +278,13 @@ default:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 43 / storage = 333 B / avg = 7 B
-# current buf: size = 8162 B / used = 333 B / count = 43 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 342 B / avg = 7 B
+# current buf: size = 8162 B / used = 342 B / count = 44 / avg = 7 B
 
-# strcache performance: lookups = 48 / hit rate = 10%
+# strcache performance: lookups = 49 / hit rate = 10%
 # hash-table stats:
+# Load=44/8192=1%, Rehash=0, Collisions=1/49=2%
+# Finished Make data base on Sat Sep 18 23:25:06 2021
  
-make: *** No rule to make target 'all'.  Stop.
- 
-# Load=43/8192=1%, Rehash=0, Collisions=1/48=2%
-# Finished Make data base on Sat Sep 18 18:08:57 2021
 
  
