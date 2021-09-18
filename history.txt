@@ -1,14 +1,3 @@
-vim
-vim a
-gedit &
-cd ..
-cd test
-cd ..
-ls
-ls -al
-cd test2
-cd
-cd ~
 cd ..
 ls
 ls -al
@@ -18,3 +7,14 @@ ls
 ls -al
 ls -a
 ls -l
+vim
+vi
+gedit &
+ls -al
+vim &
+gedit &
+pinfo 85059
+./a.out &
+pinfo 85156
+	dsadas
+cd ~

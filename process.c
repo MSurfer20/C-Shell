@@ -33,7 +33,7 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     {
         if (backround_process)
         {
-            bg_jobs[proc_no].agrv = args;
+            bg_jobs[proc_no].agrv = exec_arguments;
             bg_jobs[proc_no].pid = pid;
             proc_no++;
 

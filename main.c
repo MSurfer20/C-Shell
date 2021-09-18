@@ -222,18 +222,21 @@ int main()
                     buf[2] = 0;
                     if (read(STDIN_FILENO, buf, 2) == 2)
                     { // length of escape code
-                        printf("\r");
-                        for (int x = 0; x < 100; x++)
-                            printf(" ");
-                        printf("\r");
-                        prompt(pwd, home_dir);
-                        prev_command_no++;
-                        char *history_command = get_nth_history(prev_command_no);
-                        pt = strlen(history_command);
-                        strcpy(all_commands, history_command);
-                        all_commands[pt] = '\0';
-                        printf("%s", history_command);
-                        free(history_command);
+                        if (buf[1] == 'A')
+                        {
+                            printf("\r");
+                            for (int x = 0; x < 100; x++)
+                                printf(" ");
+                            printf("\r");
+                            prompt(pwd, home_dir);
+                            prev_command_no++;
+                            char *history_command = get_nth_history(prev_command_no);
+                            pt = strlen(history_command);
+                            strcpy(all_commands, history_command);
+                            all_commands[pt] = '\0';
+                            printf("%s", history_command);
+                            free(history_command);
+                        }
                     }
                 }
                 else if (c == 127)
