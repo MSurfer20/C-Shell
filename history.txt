@@ -5,3 +5,12 @@ cd
 cd test
 history
 history 2
+repeat 100 ls -l
+repeat 10000 ls -l
+l
+history
+ls -l .
+ls -l
+ls -l test
+ls -l
+ls -l test2

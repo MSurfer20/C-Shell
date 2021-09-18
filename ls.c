@@ -149,6 +149,54 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
                 perror("Opening Directory");
                 continue;
             }
+            int total_siz = 0;
+            next_file = readdir(dire);
+            while ((next_file != NULL))
+            {
+                strcpy(file_name, next_file->d_name);
+                if (!a_flag && file_name[0] == '.')
+                {
+                    next_file = readdir(dire);
+                    continue;
+                }
+
+                if (!l_flag)
+                {
+                    next_file = readdir(dire);
+                    continue;
+                }
+                char file_path[10000];
+                strcpy(file_path, argument);
+                strcat(file_path, "/");
+                strcat(file_path, file_name);
+                struct stat file_stats;
+                int stat_result = stat(file_path, &file_stats);
+                if (stat_result == -1)
+                {
+                    char err_buf[1100];
+                    sprintf(err_buf, "Error reading %s", file_name);
+                    perror(err_buf);
+                    return;
+                }
+                total_siz += file_stats.st_blocks;
+                next_file = readdir(dire);
+            }
+
+            printf("total %d\n", total_siz / 2);
+
+            dire = opendir(argument);
+
+            if (dire == NULL)
+            {
+                perror("Couldnt open directory");
+            }
+
+            if (!dire)
+            {
+                perror("Opening Directory");
+                continue;
+            }
+
             next_file = readdir(dire);
             while ((next_file != NULL))
             {
