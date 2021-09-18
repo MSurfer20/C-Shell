@@ -75,11 +75,25 @@ void print_file_data(char *file_name, char *file_path)
     }
     printf("  %10s", grp->gr_name);
     printf(" %10d", (int)file_stats.st_size);
-    struct tm *time = localtime(&file_stats.st_mtim.tv_sec);
+    struct tm *file_time = localtime(&file_stats.st_mtim.tv_sec);
+    printf("\nSEC%ld\n", &file_stats.st_mtim.tv_sec);
+
+    time_t raw_curr_time;
+    time(&raw_curr_time);
+    printf("NOWWW%ld\n", raw_curr_time);
+    struct tm *curr_time_info = localtime(&raw_curr_time);
     char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    printf(" %s", month_array[time->tm_mon]);
-    printf(" %2d", time->tm_mday);
-    printf(" %d", 1900 + time->tm_year);
+    printf("NOW %s", month_array[curr_time_info->tm_mon]);
+    printf(" %2d", curr_time_info->tm_mday);
+    printf(" %d", 1900 + curr_time_info->tm_year);
+    printf(" %d", curr_time_info->tm_hour);
+    printf(" %d", curr_time_info->tm_min);
+    printf(" %d", curr_time_info->tm_sec);
+
+    // char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    printf(" %s", month_array[file_time->tm_mon]);
+    printf(" %2d", file_time->tm_mday);
+    printf(" %d", 1900 + file_time->tm_year);
     printf(" %s", file_name);
     printf("\n");
 }

@@ -28,6 +28,8 @@ void history(int number_of_commands)
 
 void add_history(char *command)
 {
+    if (strlen(command) == 0)
+        return;
     FILE *read_file = fopen("./history.txt", "r");
     char line[1000];
     int command_count = 0;
