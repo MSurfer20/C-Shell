@@ -4,11 +4,15 @@
 void execute_process(char *command, int i, char **args, bool backround_process)
 {
     fflush(stdin);
-    printf("%d\n", (int)backround_process);
     char *exec_arguments[i + 2];
-    exec_arguments[0] = command;
+    exec_arguments[0] = calloc(strlen(command) + 2, sizeof(char));
+    strcpy(exec_arguments[0], command);
     for (int x = 0; x < i; x++)
-        exec_arguments[x + 1] = args[x];
+    {
+        exec_arguments[x + 1] = calloc(100, sizeof(char));
+        printf("%s", args[x]);
+        strcpy(exec_arguments[x + 1], args[x]);
+    }
     exec_arguments[i + 1] = (char *)NULL;
 
     int pid = fork();
@@ -19,7 +23,6 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     }
     else if (pid == 0)
     {
-        // setpgid(0, 0);
         if (backround_process)
             setpgid(0, 0);
         int exec_return = execvp(command, exec_arguments);
@@ -36,8 +39,6 @@ void execute_process(char *command, int i, char **args, bool backround_process)
             bg_jobs[proc_no].agrv = exec_arguments;
             bg_jobs[proc_no].pid = pid;
             proc_no++;
-
-            // setpgid(0, 0);
             printf("%d\n", pid);
         }
         else
@@ -46,42 +47,50 @@ void execute_process(char *command, int i, char **args, bool backround_process)
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
         }
     }
+    printf("AAAAAAAAAAAAAAAAAAa\n");
     return;
 }
 
 void finish_proc()
 {
+    printf("BBBBBBBBBBBBBBBBBBB\n");
     int status;
     bool flag = false;
     char **argv;
-    pid_t pid = waitpid(-1, &status, WNOHANG);
-    // if (pid < 0)
-    //     return;
-    for (int x = 0; x < proc_no; x++)
+    pid_t pid;
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
     {
-        if (bg_jobs[x].pid == pid)
+        for (int x = 0; x < proc_no; x++)
         {
-            flag = true;
-            argv = bg_jobs[x].agrv;
-
-            for (int y = x; y < proc_no - 1; y++)
+            if (bg_jobs[x].pid == pid)
             {
-                bg_jobs[y].agrv = bg_jobs[y + 1].agrv;
-                bg_jobs[y].pid = bg_jobs[y + 1].pid;
+                flag = true;
+                argv = bg_jobs[x].agrv;
+
+                for (int y = x; y < proc_no - 1; y++)
+                {
+                    bg_jobs[y].agrv = bg_jobs[y + 1].agrv;
+                    bg_jobs[y].pid = bg_jobs[y + 1].pid;
+                }
+                proc_no--;
+                int cur_rem = 0;
+                // while (argv[cur_rem] != NULL)//TODO: SEGFAULT
+                // {
+                //     free(argv[cur_rem]);
+                //     cur_rem++;
+                // }
+                break;
             }
-            proc_no--;
-
-            break;
         }
-    }
 
-    if (!flag)
-        return;
-    if (!WEXITSTATUS(status) && WIFEXITED(status))
-        printf("%s with PID %d exited normally.\n", argv[1], pid);
-    else
-        printf("%s with PID %d did not exit normally.\n", argv[1], pid);
-    restart_loop = true;
-    fflush(stdin);
-    fflush(stdout);
+        if (!flag)
+            return;
+        if (!WEXITSTATUS(status) && WIFEXITED(status))
+            printf("%s with PID %d exited normally.\n", argv[1], pid);
+        else
+            printf("%s with PID %d did not exit normally.\n", argv[1], pid);
+        restart_loop = true;
+        fflush(stdin);
+        fflush(stdout);
+    }
 }

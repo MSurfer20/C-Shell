@@ -1,18 +1,20 @@
-ls
-cd ..
-cat file
-cd StarterCode
-cat header.h
-cat pwd.c
-cd ~
-cd StarterCode
-cd test
-cd ~
-cd -
-repeat 10000 cd .
-gedit &
-gedit 90456
-pinfo 90456
-gedit
-pinfo 90783
-pinfo 96024
+./a.out 10 20 30 40
+./a.out
+./a.out 1
+./a.out 1 2 3 4
+./a.out 12 12
+./a.out 1 2
+./a.out 1 2 3
+./a.out 1 2 23 4
+./a.out 1 2 3 4
+./a.out 1 2 34
+./a.out 1 2 3
+./a.out 1 2 3 4
+repeat 10 ./a.out
+repeat 10 ./a.out 1 2 3 4
+./a.out 1 2 3 4 56
+repeat 10 gedit &
+repeat 10 gedit
+repeat 10 gedit &
+repeat 10 ./a.out &
+repeat 10 ./a.out 1 2 3 4

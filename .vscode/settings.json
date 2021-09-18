@@ -8,5 +8,12 @@
         "stdio.h": "c",
         "process.h": "c",
         "history.h": "c"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode",
+            "binaryPath": "/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode/svsh.out",
+            "binaryArgs": []
+        }
+    ]
 }

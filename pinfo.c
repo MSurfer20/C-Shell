@@ -22,14 +22,10 @@ void pinfo(pid_t pid, char *home_dir)
 
     char *proc_name = calloc(10000, sizeof(char));
     char *proc_file = calloc(10000, sizeof(char));
-    // char *temp = calloc(10000, sizeof(char));
     sprintf(proc_name, "/proc/%d", pid);
     strcpy(proc_file, proc_name);
     strcat(proc_file, "/stat");
     char a[1000], b[1000], c[1000];
-    // strcpy(proc_file, "/proc/");
-    // strcpy(proc_file, pid);
-    // strcpy(proc_file, "/status");
     size_t len = 0;
     ssize_t read;
 
@@ -55,12 +51,18 @@ void pinfo(pid_t pid, char *home_dir)
     while ((read = getline(&line, &len, file_ptr)) != -1)
     {
         if (startswith(line, "VmSize:"))
-            printf("memory -- %s {Virtual Memory}\n", line + 8);
+        {
+            char *temp_string = calloc(100, sizeof(char));
+            strcpy(temp_string, line + 8);
+            temp_string[strlen(temp_string) - 1] = '\0';
+            printf("memory -- %s {Virtual Memory}\n", temp_string);
+            free(temp_string);
+        }
     }
 
     strcpy(proc_file, proc_name);
     strcat(proc_file, "/exe");
-    char executable_path[1000];
+    char *executable_path = calloc(1000, sizeof(char));
     if (readlink(proc_file, executable_path, 1000) < 0)
     {
         perror("Error getting exec path");
@@ -68,8 +70,12 @@ void pinfo(pid_t pid, char *home_dir)
     }
     char *final_exec_path = process_path(executable_path, home_dir);
     printf("Executable Path -- %s\n", final_exec_path);
-
+    free(executable_path);
+    free(final_exec_path);
     fclose(file_ptr);
     if (line)
         free(line);
+
+    free(proc_name);
+    free(proc_file);
 }

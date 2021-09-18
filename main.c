@@ -105,6 +105,8 @@ void execute_command(char *command, char **args, int i, char *history_file)
             strcpy(ls_arguments[0], ".");
         }
         ls(home_dir, a_flag, l_flag, ls_arguments, ls_arg_count);
+        for (int y = 0; y < ls_arg_count; y++)
+            free(ls_arguments[y]);
     }
 
     else if (strcmp(command, "cd") == 0)
@@ -169,8 +171,6 @@ void execute_command(char *command, char **args, int i, char *history_file)
                 if (strlen(args[i - 1]) == 0)
                 {
                     i--;
-                    // free(args[i]);
-                    args[i] = NULL;
                 }
             }
             else
@@ -199,7 +199,7 @@ int main()
     strcpy(history_file, home_dir);
     strcat(history_file, "/history.txt");
 
-    char *all_commands = malloc(sizeof(char) * 100);
+    char *all_commands = calloc(100, sizeof(char));
     char c;
     int prev_command_no = 0;
 

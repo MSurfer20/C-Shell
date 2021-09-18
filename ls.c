@@ -103,6 +103,7 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
     char *argument;
     for (int y = 0; y < arg_length; y++)
     {
+        bool free_flag = false;
         argument = argument_list[y];
         if (strlen(argument) == 0)
             argument[0] = '.';
@@ -112,6 +113,7 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             strcpy(new_argument, home_dir);
             strcat(new_argument, argument + 1);
             argument = new_argument;
+            free_flag = true;
         }
 
         //Testing if a file or directory
@@ -170,6 +172,9 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
                 print_file_data(file_name, file_path);
                 next_file = readdir(dire);
             }
+            if (free_flag)
+                free(argument);
+            free(file_name);
             continue;
         }
 
@@ -186,6 +191,10 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             print_file_data(file_name, argument);
         else
             printf("%s\n", file_name);
+
+        free(file_name);
+        if (free_flag)
+            free(argument);
         continue;
     }
 }
