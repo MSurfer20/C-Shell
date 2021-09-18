@@ -76,23 +76,31 @@ void print_file_data(char *file_name, char *file_path)
     printf("  %10s", grp->gr_name);
     printf(" %10d", (int)file_stats.st_size);
     struct tm *file_time = localtime(&file_stats.st_mtim.tv_sec);
-    printf("\nSEC%ld\n", &file_stats.st_mtim.tv_sec);
+    int file_date = file_time->tm_mday;
+    int file_month = file_time->tm_mon;
+    int file_year = 1900 + file_time->tm_year;
+    int file_hour = file_time->tm_hour;
+    int file_min = file_time->tm_min;
+    int file_sec = file_time->tm_sec;
 
     time_t raw_curr_time;
     time(&raw_curr_time);
-    printf("NOWWW%ld\n", raw_curr_time);
     struct tm *curr_time_info = localtime(&raw_curr_time);
-    char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    printf("NOW %s", month_array[curr_time_info->tm_mon]);
-    printf(" %2d", curr_time_info->tm_mday);
-    printf(" %d", 1900 + curr_time_info->tm_year);
-    printf(" %d", curr_time_info->tm_hour);
-    printf(" %d", curr_time_info->tm_min);
-    printf(" %d", curr_time_info->tm_sec);
 
-    // char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    printf(" %s", month_array[file_time->tm_mon]);
-    printf(" %2d", file_time->tm_mday);
+    char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    printf(" %s", month_array[file_month]);
+    printf(" %2d", file_date);
+    if (curr_time_info->tm_year != file_year)
+    {
+        printf(" %2d:%2d", file_hour, file_min);
+    }
+    else if (curr_time_info->tm_mon - file_month > 6)
+        printf(" %2d:%2d", file_hour, file_min);
+    else if ((curr_time_info->tm_mon - file_month == 6) && (curr_time_info->tm_mday > file_date))
+        printf(" %2d:%2d", file_hour, file_min);
+    else
+        printf(" %4d", file_year);
+
     printf(" %d", 1900 + file_time->tm_year);
     printf(" %s", file_name);
     printf("\n");
@@ -134,7 +142,6 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
                     printf("\n");
                 printf("%s:\n", argument);
             }
-            // TODO: printf("total %d\n", (int)stats.st_blocks);
             struct dirent *next_file;
             DIR *dire = opendir(argument);
 
