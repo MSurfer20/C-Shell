@@ -84,83 +84,94 @@ void print_file_data(char *file_name, char *file_path)
     printf("\n");
 }
 
-void ls(char *home_dir, bool a_flag, bool l_flag, char *argument)
+void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_length)
 {
-    if (strlen(argument) == 0)
-        argument[0] = '.';
-    if (argument[0] == '~')
+    char *argument;
+    for (int y = 0; y < arg_length; y++)
     {
-        char *new_argument = calloc(1000, sizeof(char));
-        strcpy(new_argument, home_dir);
-        strcat(new_argument, argument + 1);
-        argument = new_argument;
-    }
-
-    //Testing if a file or directory
-    struct stat stats;
-    // printf("%s\n", argument);
-    int stat_return = stat(argument, &stats);
-    if (stat_return != 0)
-    {
-        perror("Cannot open directory or file");
-        return;
-    }
-
-    //Code for a directory
-    if (S_ISDIR(stats.st_mode))
-    {
-        struct dirent *next_file;
-        DIR *dire = opendir(argument);
-
-        if (dire == NULL)
+        argument = argument_list[y];
+        if (strlen(argument) == 0)
+            argument[0] = '.';
+        if (argument[0] == '~')
         {
-            perror("Couldnt open directory");
+            char *new_argument = calloc(1000, sizeof(char));
+            strcpy(new_argument, home_dir);
+            strcat(new_argument, argument + 1);
+            argument = new_argument;
         }
 
-        char *file_name = calloc(1000, sizeof(char));
-        if (!dire)
+        //Testing if a file or directory
+        struct stat stats;
+        int stat_return = stat(argument, &stats);
+        if (stat_return != 0)
         {
-            perror("Opening Directory");
-            return;
+            perror("Cannot open directory or file");
+            continue;
         }
-        next_file = readdir(dire);
-        while ((next_file != NULL))
+
+        //Code for a directory
+        if (S_ISDIR(stats.st_mode))
         {
-            strcpy(file_name, next_file->d_name);
-            if (!a_flag && file_name[0] == '.')
+            if (arg_length > 1)
             {
-                next_file = readdir(dire);
-                continue;
+                if (y > 0)
+                    printf("\n");
+                printf("%s:\n", argument);
+            }
+            // TODO: printf("total %d\n", (int)stats.st_blocks);
+            struct dirent *next_file;
+            DIR *dire = opendir(argument);
+
+            if (dire == NULL)
+            {
+                perror("Couldnt open directory");
             }
 
-            if (!l_flag)
+            char *file_name = calloc(1000, sizeof(char));
+            if (!dire)
             {
-                printf("%s\n", next_file->d_name);
-                next_file = readdir(dire);
+                perror("Opening Directory");
                 continue;
             }
-            char file_path[10000];
-            strcpy(file_path, argument);
-            strcat(file_path, "/");
-            strcat(file_path, file_name);
-            print_file_data(file_name, file_path);
             next_file = readdir(dire);
+            while ((next_file != NULL))
+            {
+                strcpy(file_name, next_file->d_name);
+                if (!a_flag && file_name[0] == '.')
+                {
+                    next_file = readdir(dire);
+                    continue;
+                }
+
+                if (!l_flag)
+                {
+                    printf("%s\n", next_file->d_name);
+                    next_file = readdir(dire);
+                    continue;
+                }
+                char file_path[10000];
+                strcpy(file_path, argument);
+                strcat(file_path, "/");
+                strcat(file_path, file_name);
+                print_file_data(file_name, file_path);
+                next_file = readdir(dire);
+            }
+            continue;
         }
-        return;
+
+        //Code for a file
+        int length = strlen(argument);
+        int break_index = 0;
+        for (int x = 0; x < length; x++)
+            if (argument[x] == '/')
+                break_index = x + 1;
+
+        char *file_name = (char *)calloc(1000, sizeof(char));
+        strcpy(file_name, argument + break_index);
+        if (l_flag)
+            print_file_data(file_name, argument);
+        else
+            printf("%s\n", file_name);
+        continue;
     }
-
-    //Code for a file
-    int length = strlen(argument);
-    int break_index = 0;
-    for (int x = 0; x < length; x++)
-        if (argument[x] == '/')
-            break_index = x + 1;
-
-    char *file_name = (char *)calloc(1000, sizeof(char));
-    strcpy(file_name, argument + break_index);
-    if (l_flag)
-        print_file_data(file_name, argument);
-    else
-        printf("%s\n", file_name);
-    return;
 }

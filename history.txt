@@ -18,7 +18,12 @@ ls
 
 
 
-lsdsadasdas0
-cd ..
-ls
-vim abc.c
+ls history.c testls -l
+ls -al test test2
+ls -l test test2
+ls -l
+ls -l test test2
+ls -al test test2
+ls -l history.c test
+ls history.c test
+ls test test2

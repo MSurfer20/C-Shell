@@ -70,13 +70,16 @@ void execute_command(char *command, char **args, int i)
 
     else if (strcmp(command, "ls") == 0)
     {
-        bool a_flag = false, l_flag = false;
-        char *ls_argument = calloc(1000, sizeof(char));
+        char *ls_arguments[100];
+        int ls_arg_count = 0;
+        bool a_flag = false, l_flag = false, is_flag = false;
         for (int x = 0; x < i; x++)
         {
+            is_flag = false;
             char *ag = args[x];
             if (ag[0] == '-')
             {
+                is_flag = true;
                 int ag_len = strlen(ag);
                 for (int y = 1; y < ag_len; y++)
                 {
@@ -84,12 +87,24 @@ void execute_command(char *command, char **args, int i)
                         a_flag = true;
                     else if (ag[y] == 'l')
                         l_flag = true;
+                    else
+                        a_flag = false, l_flag = false, is_flag = false;
                 }
             }
-            else
-                strcpy(ls_argument, args[x]);
+            if (!is_flag)
+            {
+                ls_arguments[ls_arg_count] = calloc(strlen(args[x]) + 10, sizeof(char));
+                strcpy(ls_arguments[ls_arg_count], args[x]);
+                ls_arg_count++;
+            }
         }
-        ls(home_dir, a_flag, l_flag, ls_argument);
+        if (ls_arg_count == 0)
+        {
+            ls_arguments[0] = calloc(10, sizeof(char));
+            ls_arg_count++;
+            strcpy(ls_arguments[0], ".");
+        }
+        ls(home_dir, a_flag, l_flag, ls_arguments, ls_arg_count);
     }
 
     else if (strcmp(command, "cd") == 0)
@@ -261,6 +276,7 @@ int main()
         }
         disableRawMode();
         all_commands[pt] = '\0';
+        printf("\n");
 
         char *each_command;
         char *savepointer1, *savepointer2;
