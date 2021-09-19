@@ -9,3 +9,10 @@ ls -l ./test/history.txt ./test
 exit
 ls -l
 exit
+ls ~
+ls -l ~
+ls -al ~
+repeat 1000000 ls
+exit
+repeat 100000 ls
+exit

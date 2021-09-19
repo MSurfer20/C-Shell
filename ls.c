@@ -60,7 +60,7 @@ void print_file_data(char *file_name, char *file_path)
     if (pw == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting owner name of %s\t\t\t", file_name);
+        sprintf(err_buf, "\rError getting owner name of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -69,7 +69,7 @@ void print_file_data(char *file_name, char *file_path)
     if (grp == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting owner name of %s\t\t\t", file_name);
+        sprintf(err_buf, "\rError getting owner name of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -79,7 +79,7 @@ void print_file_data(char *file_name, char *file_path)
     if (file_time == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+        sprintf(err_buf, "\rError getting time name of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -247,6 +247,12 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
                 printf("total %d\n", total_siz / 2);
             }
 
+            if (closedir(dire) < 0)
+            {
+                perror("Error closing directory");
+                return;
+            }
+
             dire = opendir(argument);
 
             if (dire == NULL)
@@ -286,6 +292,11 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             if (free_flag)
                 free(argument);
             free(file_name);
+            if (closedir(dire) < 0)
+            {
+                perror("Error closing directory");
+                return;
+            }
             continue;
         }
 
