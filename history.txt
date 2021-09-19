@@ -1,18 +1,20 @@
 ls
-ls -a
-ls -al
-ls
-exit
-ls -l ./test/history.txt
-exit
-ls -l ./test/history.txt ./test
-exit
 ls -l
 exit
-ls ~
-ls -l ~
-ls -al ~
-repeat 1000000 ls
+vim
 exit
-repeat 100000 ls
+vim
+gedit
+exit
+gedit
+vim
+exit
+vim
+exir
+exit
+vim
+gedit
+zulip
+exit
+gedit
 exit

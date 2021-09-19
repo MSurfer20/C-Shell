@@ -1,6 +1,11 @@
 #include "headers.h"
 #include "process.h"
 
+void ignore_signal(int signal)
+{
+    return;
+}
+
 void execute_process(char *command, int i, char **args, bool backround_process)
 {
     fflush(stdin);
@@ -23,13 +28,14 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     }
     else if (pid == 0)
     {
-        if (backround_process)
-            setpgid(0, 0);
+        setpgid(0, 0);
         int exec_return = execvp(command, exec_arguments);
         if (exec_return < 0)
         {
             perror("Error in process");
-            exit(0);
+            int kill_stats = kill(getpid(), SIGTERM);
+            if (kill_stats < 0)
+                kill(getpid(), SIGKILL);
         }
     }
     else
@@ -50,8 +56,20 @@ void execute_process(char *command, int i, char **args, bool backround_process)
         }
         else
         {
+            signal(SIGTTOU, SIG_IGN);
+            int change_grp_stats = tcsetpgrp(STDIN_FILENO, pid);
+            if (change_grp_stats < 0)
+            {
+                perror("Error turning the process into a foreground one.");
+                int k_stat = kill(getpid(), SIGTERM);
+                if (k_stat < 0)
+                    kill(getpid(), SIGKILL);
+            }
             int status;
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
+            // printf("\n%d\n", getpgrp());
+            tcsetpgrp(STDIN_FILENO, getpgrp());
+            signal(SIGTTOU, SIG_DFL);
             printf("\n");
         }
     }
