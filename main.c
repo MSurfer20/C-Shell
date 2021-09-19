@@ -273,7 +273,7 @@ int main()
     strcpy(history_file, actual_home_path);
     strcat(history_file, "/history.txt");
 
-    char *all_commands = calloc(1000, sizeof(char));
+    char *all_commands = calloc(10000, sizeof(char));
     char c;
     int prev_command_no = 0;
 

@@ -32,3 +32,6 @@
 * prompt: The prompt with the username, and the systemname(hostname) is shown along with the pwd. A function checks if the home directory is a equal to, or is a substring(followed by a `/`), such that the whole portion is replaced by `~`.
 * Pwd: Pwd is printed from the root(`/`) of the machine. It doesn't accept any arguments, and throws error when the same are given.
 * Tokenized commands-The commands are also tokenized on `;`, which is given highest priority in command processing.
+* exit - I have turned off the interrupt signals for the shell process, and in order to exit the shell, you must use the exit command.
+
+A big assumption taken in this shell's working is that no arguments would contain a 
