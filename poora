@@ -19,7 +19,8 @@ void cd(char *cwd, char *home_dir, char *argument, char *previous_directory)
     {
         perror("Directory change");
     }
-}#include "echo.h"
+}
+#include "echo.h"
 #include "headers.h"
 
 void echo(char **str, int length)
@@ -35,7 +36,8 @@ void echo(char **str, int length)
         printf(" %s", str[x]);
     }
     printf("\n");
-}#include "headers.h"
+}
+#include "headers.h"
 #include "history.h"
 
 void history(int number_of_commands, char *history_file)
@@ -126,7 +128,8 @@ char *get_nth_history(int n, char *history_file)
     if (return_str[strlen(return_str) - 1] == '\n')
         return_str[strlen(return_str) - 1] = '\0';
     return return_str;
-}#include "ls.h"
+}
+#include "ls.h"
 #include "headers.h"
 
 void print_file_data(char *file_name, char *file_path)
@@ -802,7 +805,8 @@ void pinfo(pid_t pid, char *home_dir)
 
     free(proc_name);
     free(proc_file);
-}#include "headers.h"
+}
+#include "headers.h"
 #include "process.h"
 
 void execute_process(char *command, int i, char **args, bool backround_process)
@@ -899,9 +903,9 @@ void finish_proc()
         // for (int x = 0; x < 10; x++)
         //     printf("%s", argv[x]);
         if (!WEXITSTATUS(status) && WIFEXITED(status))
-            printf("%s with PID %d exited normally.\n", argv[0], pid);
+            fprintf(stderr, "%s with PID %d exited normally.\n", argv[0], pid);
         else
-            printf("%s with PID %d exited abnormally.\n", argv[0], pid);
+            fprintf(stderr, "%s with PID %d exited abnormally.\n", argv[0], pid);
 
         restart_loop = true;
         for (int y = 0; y < number_of_remove_args; y++)
@@ -910,10 +914,12 @@ void finish_proc()
         fflush(stdin);
         fflush(stdout);
     }
-}#include "prompt.h"
+}
+#include "prompt.h"
 #include "headers.h"
 
-char *process_path(char *pwd, char *home_dir)
+char *
+process_path(char *pwd, char *home_dir)
 {
     // printf("PROMPT %s %s\n", pwd, home_dir);
     char temp_path[10000];

@@ -1,20 +1,20 @@
-make
+vim
+vi
+./a.out 1 2 3
+vim
+gedit
+vim &
+gedit &
 exit
-ls -l pwd.c pwd.h
-exit
-ls -l
-ls -l pwd.c pwd.h
-ls -l test pwd.c
-exit
-ls -l
-exit
-ls -l
-exit
-ls -l
-exit
-ls -l
-exit
-ls -l
-exit
-ls -l
+pinfo
+gedit &
+pinfo 118217
+./a.out &
+gedit 118236
+pinfo 118236
+firefox &
+pinfo 118266
+ls test test2 pwd.c -al
+gedit &
+ls
 exit
