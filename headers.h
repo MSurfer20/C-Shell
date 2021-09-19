@@ -13,7 +13,7 @@
 #include <wait.h>
 #include <ctype.h>
 #include <termios.h>
-
+#include <signal.h>
 struct bg_process
 {
     char **agrv;

@@ -12,6 +12,11 @@ char home_dir[10000], pwd[10000];
 char previous_directory[10000];
 char temp_directory[10000];
 
+void ignoresignal(int signal)
+{
+    return;
+}
+
 void die(const char *s)
 {
     perror(s);
@@ -219,6 +224,8 @@ int main()
         prev_command_no = 0;
         getcwd(pwd, 10000);
         prompt(pwd, home_dir);
+        signal(SIGINT, ignoresignal);
+        signal(SIGTSTP, ignoresignal);
 
         setbuf(stdout, NULL);
         enableRawMode();
@@ -313,6 +320,11 @@ int main()
                 args[i] = token;
                 i++;
                 token = strtok_r(NULL, " \t", &savepointer2);
+            }
+
+            if (strcmp(command, "exit") == 0)
+            {
+                return 0;
             }
 
             execute_command(command, args, i, history_file);
