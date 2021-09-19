@@ -28,7 +28,12 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     }
     else if (pid == 0)
     {
-        setpgid(0, 0);
+        int set_pgid_error = setpgid(0, 0);
+        if (set_pgid_error == -1)
+        {
+            perror("Error in setting pgid");
+            return;
+        }
         int exec_return = execvp(command, exec_arguments);
         if (exec_return < 0)
         {

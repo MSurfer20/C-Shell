@@ -1,20 +1,20 @@
+gedit a b c d e f g &
+echo a
+echo b
+echo a
+history
+history 4
 exit
-vim
-vim &
-gedit &
-ls
+gedit a b d v df &exit
 exit
-gedit &
-pinfo 14172
-vim
-pinfo 14275
+ls -l
+ls -l -a
+ls -l -a .. -l -a .
+	
+   
 exit
-pinfo
+	
+ 
 exit
-pinfo
-exit
-pinfo
-vim &
-pinfo 14971
-pinfo 14275
+	
 exit

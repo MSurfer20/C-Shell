@@ -110,7 +110,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
         }
         if (ls_arg_count == 0)
         {
-            ls_arguments[0] = calloc(10, sizeof(char));
+            ls_arguments[0] = calloc(100, sizeof(char));
             ls_arg_count++;
             strcpy(ls_arguments[0], ".");
         }
@@ -199,8 +199,8 @@ void execute_command(char *command, char **args, int i, char *history_file)
             int arg_length = strlen(args[i - 1]);
             if (args[i - 1][arg_length - 1] == '&')
             {
-                args[i - 1][arg_length - 1] = '\0';
                 backround_process = true;
+                args[i - 1][arg_length - 1] = '\0';
                 if (arg_length == 1)
                 {
                     args[i - 1] = NULL;
@@ -319,10 +319,10 @@ int main()
                         printf(" ");
                     }
                 }
-                else if (c == 4)
-                {
-                    exit(0);
-                }
+                // else if (c == 4)
+                // {
+                //     exit(0);
+                // }
                 else
                 {
                     printf("%d\n", c);
@@ -340,6 +340,16 @@ int main()
 
         char *each_command;
         char *savepointer1, *savepointer2;
+        int all_commands_length = strlen(all_commands);
+        if (all_commands_length == 0)
+            continue;
+        bool empty_input_detected = true;
+        for (int command_index = 0; command_index < all_commands_length; command_index++)
+            if (all_commands[command_index] != ' ' && all_commands[command_index] != '\t')
+                empty_input_detected = false;
+        if (empty_input_detected)
+            continue;
+
         add_history(all_commands, history_file);
 
         each_command = strtok_r(all_commands, ";", &savepointer1);
