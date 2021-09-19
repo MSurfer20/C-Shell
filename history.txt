@@ -7,3 +7,5 @@ ls -l ./test/history.txt
 exit
 ls -l ./test/history.txt ./test
 exit
+ls -l
+exit

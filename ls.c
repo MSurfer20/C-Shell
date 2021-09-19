@@ -76,6 +76,13 @@ void print_file_data(char *file_name, char *file_path)
     printf("  %10s", grp->gr_name);
     printf(" %10d", (int)file_stats.st_size);
     struct tm *file_time = localtime(&file_stats.st_mtim.tv_sec);
+    if (file_time == NULL)
+    {
+        char err_buf[1100];
+        sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+        perror(err_buf);
+        return;
+    }
     int file_date = file_time->tm_mday;
     int file_month = file_time->tm_mon;
     int file_year = 1900 + file_time->tm_year;
@@ -86,30 +93,63 @@ void print_file_data(char *file_name, char *file_path)
     time_t raw_curr_time;
     time(&raw_curr_time);
     struct tm *curr_time_info = localtime(&raw_curr_time);
+    if (curr_time_info == NULL)
+    {
+        perror("Error getting current time");
+        return;
+    }
     char time_array[100];
 
     char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     if (1900 + curr_time_info->tm_year != file_year)
     {
         file_time = localtime(&file_stats.st_mtim.tv_sec);
+        if (file_time == NULL)
+        {
+            char err_buf[1100];
+            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            perror(err_buf);
+            return;
+        }
         strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
         printf("%s", time_array);
     }
     else if (curr_time_info->tm_mon - file_month > 6)
     {
         file_time = localtime(&file_stats.st_mtim.tv_sec);
+        if (file_time == NULL)
+        {
+            char err_buf[1100];
+            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            perror(err_buf);
+            return;
+        }
         strftime(time_array, sizeof(time_array), " %b %d  %Y", file_time);
         printf("%s", time_array);
     }
     else if ((curr_time_info->tm_mon - file_month == 6) && (curr_time_info->tm_mday > file_date))
     {
         file_time = localtime(&file_stats.st_mtim.tv_sec);
+        if (file_time == NULL)
+        {
+            char err_buf[1100];
+            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            perror(err_buf);
+            return;
+        }
         strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
         printf("%s", time_array);
     }
     else
     {
         file_time = localtime(&file_stats.st_mtim.tv_sec);
+        if (file_time == NULL)
+        {
+            char err_buf[1100];
+            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            perror(err_buf);
+            return;
+        }
         strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
         printf("%s", time_array);
     }
