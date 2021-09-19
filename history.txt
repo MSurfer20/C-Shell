@@ -1,2 +1,5 @@
-gedit &
-./negative &
+ls
+ls -a
+ls -al
+ls
+exit

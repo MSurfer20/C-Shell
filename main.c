@@ -70,6 +70,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "pwd") == 0)
     {
+        if (i > 0)
+        {
+            printf("Error: Too many arguments.\n");
+            return;
+        }
         get_pwd(pwd);
     }
 
@@ -140,8 +145,13 @@ void execute_command(char *command, char **args, int i, char *history_file)
         {
             pid = getpid();
         }
-        else
+        else if (i == 1)
             pid = atoi(args[0]);
+        else
+        {
+            printf("Error: Invalid number of arguments given for pinfo.\n");
+            return;
+        }
         pinfo(pid, home_dir);
     }
 
@@ -172,8 +182,13 @@ void execute_command(char *command, char **args, int i, char *history_file)
         // add_history("10");
         if (i == 0)
             history(10, history_file);
-        else
+        else if (i == 1)
             history(atoi(args[0]), history_file);
+        else
+        {
+            printf("Error: Invalid number of arguments for history.\n");
+            return;
+        }
     }
 
     else
