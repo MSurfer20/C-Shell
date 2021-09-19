@@ -313,9 +313,7 @@ int main()
                     { // length of escape code
                         if (buf[1] == 'A')
                         {
-                            printf("\r");
-                            for (int x = 0; x < 100; x++)
-                                printf(" ");
+                            printf("\r\33[2K");
                             printf("\r");
                             prompt(pwd, home_dir);
                             prev_command_no++;
