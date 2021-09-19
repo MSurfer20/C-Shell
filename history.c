@@ -27,6 +27,7 @@ void history(int number_of_commands, char *history_file)
     {
         for (int x = 0; x < command_count; x++)
             printf("%s", history_commands[x]);
+        printf("\n");
         return;
     }
     for (int x = command_count - number_of_commands; x < command_count; x++)
