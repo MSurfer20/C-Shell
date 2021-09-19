@@ -104,9 +104,9 @@ void finish_proc()
 
                 for (int y = x; y < proc_no - 1; y++)
                 {
-                    bg_jobs[y].agrv = bg_jobs[y + 1].agrv;
-                    bg_jobs[y].pid = bg_jobs[y + 1].pid;
-                    bg_jobs[y].number_of_args = bg_jobs[y + 1].number_of_args;
+                    bg_jobs[y].agrv = bg_jobs[1 + y].agrv;
+                    bg_jobs[y].pid = bg_jobs[1 + y].pid;
+                    bg_jobs[y].number_of_args = bg_jobs[1 + y].number_of_args;
                 }
                 proc_no--;
                 int cur_rem = 0;

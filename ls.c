@@ -13,46 +13,57 @@ void print_file_data(char *file_name, char *file_path)
         perror(err_buf);
         return;
     }
+    char ch;
     if (S_ISDIR(file_stats.st_mode))
-        printf("d");
+        ch = 'd';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IRUSR)
-        printf("r");
+        ch = 'r';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IWUSR)
-        printf("w");
+        ch = 'w';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IXUSR)
-        printf("x");
+        ch = 'x';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IRGRP)
-        printf("r");
+        ch = 'r';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IWGRP)
-        printf("w");
+        ch = 'w';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IXGRP)
-        printf("x");
+        ch = 'x';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IROTH)
-        printf("r");
+        ch = 'r';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IWOTH)
-        printf("w");
+        ch = 'w';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     if (file_stats.st_mode & S_IXOTH)
-        printf("x");
+        ch = 'x';
     else
-        printf("-");
+        ch = '-';
+    printf("%c", ch);
     printf(" ");
     printf(" %3d", (int)file_stats.st_nlink);
 
