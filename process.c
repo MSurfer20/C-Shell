@@ -14,7 +14,7 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     strcpy(exec_arguments[0], command);
     for (int x = 0; x < i; x++)
     {
-        exec_arguments[x + 1] = calloc(100, sizeof(char));
+        exec_arguments[x + 1] = calloc(strlen(args[x]) + 5, sizeof(char));
         printf("%s", args[x]);
         strcpy(exec_arguments[x + 1], args[x]);
     }
@@ -42,7 +42,7 @@ void execute_process(char *command, int i, char **args, bool backround_process)
     {
         if (backround_process)
         {
-            bg_jobs[proc_no].agrv = calloc(i, sizeof(char *));
+            bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
             for (int y = 0; y < i + 1; y++)
             {
                 bg_jobs[proc_no].agrv[y] = calloc(strlen(exec_arguments[y]) + 10, sizeof(char));
