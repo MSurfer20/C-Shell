@@ -263,9 +263,9 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
         char *file_name = (char *)calloc(1000, sizeof(char));
         strcpy(file_name, argument + break_index);
         if (l_flag)
-            print_file_data(file_name, argument);
+            print_file_data(argument, argument);
         else
-            printf("%s\n", file_name);
+            printf("%s\n", argument);
 
         free(file_name);
         if (free_flag)

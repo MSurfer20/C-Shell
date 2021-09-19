@@ -3,3 +3,7 @@ ls -a
 ls -al
 ls
 exit
+ls -l ./test/history.txt
+exit
+ls -l ./test/history.txt ./test
+exit
