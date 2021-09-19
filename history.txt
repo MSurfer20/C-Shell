@@ -1,20 +1,20 @@
-ls -l test
+make
+exit
+ls -l pwd.c pwd.h
+exit
 ls -l
-ls -l test2
-ls test
-ls -l test
-ls -l
-ls
-clear
-touch fil
-ls
-ls fil
-rm fil
-ls
+ls -l pwd.c pwd.h
+ls -l test pwd.c
+exit
 ls -l
 exit
-gedit
-zulip
+ls -l
+exit
+ls -l
+exit
+ls -l
+exit
+ls -l
 exit
 ls -l
 exit

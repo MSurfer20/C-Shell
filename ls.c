@@ -89,27 +89,28 @@ void print_file_data(char *file_name, char *file_path)
     char time_array[100];
 
     char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    // printf(" %s", month_array[file_month]);
-    // printf(" %2d", file_date);
-    if (curr_time_info->tm_year != file_year)
+    if (1900 + curr_time_info->tm_year != file_year)
     {
         file_time = localtime(&file_stats.st_mtim.tv_sec);
-        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
         printf("%s", time_array);
     }
     else if (curr_time_info->tm_mon - file_month > 6)
     {
-        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        file_time = localtime(&file_stats.st_mtim.tv_sec);
+        strftime(time_array, sizeof(time_array), " %b %d  %Y", file_time);
         printf("%s", time_array);
     }
     else if ((curr_time_info->tm_mon - file_month == 6) && (curr_time_info->tm_mday > file_date))
     {
-        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        file_time = localtime(&file_stats.st_mtim.tv_sec);
+        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
         printf("%s", time_array);
     }
     else
     {
-        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
+        file_time = localtime(&file_stats.st_mtim.tv_sec);
+        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
         printf("%s", time_array);
     }
 
@@ -120,6 +121,7 @@ void print_file_data(char *file_name, char *file_path)
 void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_length)
 {
     char *argument;
+    bool dir_newline_flag = false;
     for (int y = 0; y < arg_length; y++)
     {
         bool free_flag = false;
@@ -151,6 +153,7 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             {
                 if (y > 0)
                     printf("\n");
+                dir_newline_flag = true;
                 printf("%s:\n", argument);
             }
             struct dirent *next_file;
@@ -247,6 +250,10 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
         }
 
         //Code for a file
+        if (dir_newline_flag)
+        {
+            printf("\n");
+        }
         int length = strlen(argument);
         int break_index = 0;
         for (int x = 0; x < length; x++)
