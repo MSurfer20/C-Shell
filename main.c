@@ -209,7 +209,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
             {
                 if (!isdigit(args[0][ab]))
                 {
-                    printf("Second argument can only be a number.");
+                    printf("Second argument can only be a number.\n");
                     return;
                 }
             }
