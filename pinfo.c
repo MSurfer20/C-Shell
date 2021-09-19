@@ -25,7 +25,7 @@ void pinfo(pid_t pid, char *home_dir)
     sprintf(proc_name, "/proc/%d", pid);
     strcpy(proc_file, proc_name);
     strcat(proc_file, "/stat");
-    char a[1000], b[1000], c[1000];
+    char a[1000], b[1000], c[1000], d[1000], e[1000], f[1000], g[1000], h[1000], i[1000];
     size_t len = 0;
     ssize_t read;
 
@@ -36,11 +36,26 @@ void pinfo(pid_t pid, char *home_dir)
         perror("Invalid process");
         return;
     }
-    fscanf(file_ptr, "%s %s %s", a, b, c);
+    fscanf(file_ptr, "%s %s %s %s %s %s %s %s", a, b, c, d, e, f, g, h);
     printf("Process Status -- %s", c);
-    if (getpgid(pid) == tcgetpgrp(STDIN_FILENO))
+    // printf("%s\n", a);
+    // printf("%s\n", b);
+    // printf("%s\n", c);
+    // printf("%s\n", d);
+    // printf("%s\n", e);
+    // printf("%s\n", f);
+    // printf("%s\n", g);
+    // printf("%s\n", h);
+    int terminal_pid = atoi(h);
+
+    // if (getpgid(pid) == tcgetpgrp(STDIN_FILENO))
+    // {
+    //     printf("+");
+    // }
+    if (strcmp(c, "R") == 0 || strcmp(c, "S") == 0)
     {
-        printf("+");
+        if (getpgid(pid) == terminal_pid)
+            printf("+");
     }
     printf("\n");
     strcpy(proc_file, proc_name);
