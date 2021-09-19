@@ -29,13 +29,13 @@ void pinfo(pid_t pid, char *home_dir)
     size_t len = 0;
     ssize_t read;
 
-    printf("pid -- %d\n", pid);
     file_ptr = fopen(proc_file, "r");
     if (file_ptr == NULL)
     {
         perror("Invalid process");
         return;
     }
+    printf("pid -- %d\n", pid);
     fscanf(file_ptr, "%s %s %s %s %s %s %s %s %s", a, b, c, d, e, f, g, h, i);
     printf("Process Status -- %s", c);
     // printf("%s\n", a);
@@ -60,7 +60,10 @@ void pinfo(pid_t pid, char *home_dir)
     printf("\n");
     strcpy(proc_file, proc_name);
     strcat(proc_file, "/status");
-    fclose(file_ptr);
+    if (fclose(file_ptr) != 0)
+    {
+        perror("Error closing file");
+    }
     file_ptr = fopen(proc_file, "r");
 
     while ((read = getline(&line, &len, file_ptr)) != -1)
@@ -87,7 +90,10 @@ void pinfo(pid_t pid, char *home_dir)
     printf("Executable Path -- %s\n", final_exec_path);
     free(executable_path);
     free(final_exec_path);
-    fclose(file_ptr);
+    if (fclose(file_ptr) != 0)
+    {
+        perror("Error closing file");
+    }
     if (line)
         free(line);
 

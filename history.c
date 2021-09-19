@@ -19,7 +19,10 @@ void history(int number_of_commands, char *history_file)
         strcpy(history_commands[command_count], line);
         command_count++;
     }
-    fclose(read_file);
+    if (fclose(read_file) != 0)
+    {
+        perror("Error closing file");
+    }
     if (command_count < number_of_commands)
     {
         for (int x = 0; x < command_count; x++)
@@ -53,7 +56,12 @@ void add_history(char *command, char *history_file)
             command_count++;
         }
     if (read_file != NULL)
-        fclose(read_file);
+    {
+        if (fclose(read_file) != 0)
+        {
+            perror("Error closing file");
+        }
+    }
     if (strcmp(history_commands[command_count - 1], command) == 0)
     {
         return;
@@ -71,8 +79,10 @@ void add_history(char *command, char *history_file)
         perror("Error writing command to history file.\n");
         return;
     }
-    fclose(clear_file);
-
+    if (fclose(clear_file) != 0)
+    {
+        perror("Error closing file");
+    }
     FILE *append_file = fopen(history_file, "a");
     if (append_file == NULL && errno != 2)
     {
@@ -107,7 +117,11 @@ void add_history(char *command, char *history_file)
         perror("Error writing command to history file.\n");
         return;
     }
-    fclose(append_file);
+
+    if (fclose(append_file) != 0)
+    {
+        perror("Error closing file");
+    }
 }
 
 char *get_nth_history(int n, char *history_file)
@@ -131,7 +145,10 @@ char *get_nth_history(int n, char *history_file)
         strcpy(history_commands[command_count], line);
         command_count++;
     }
-    fclose(read_file);
+    if (fclose(read_file) != 0)
+    {
+        perror("Error closing file");
+    }
     int a = command_count - n;
     if (a < 0)
         strcpy(return_str, history_commands[0]);

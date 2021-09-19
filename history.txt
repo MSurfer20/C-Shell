@@ -1,8 +1,3 @@
-gedit a b c d e f g &
-echo a
-echo b
-echo a
-history
 history 4
 exit
 gedit a b d v df &exit
@@ -17,4 +12,9 @@ exit
  
 exit
 	
+exit
+cd test
+cd
+exit
+echo a;echo b;echo c
 exit

@@ -146,7 +146,18 @@ void execute_command(char *command, char **args, int i, char *history_file)
             pid = getpid();
         }
         else if (i == 1)
+        {
+            int pid_length = strlen(args[0]);
+            for (int ab = 0; ab < pid_length; ab++)
+            {
+                if (!isdigit(args[0][ab]))
+                {
+                    printf("Pid can only have numbers.");
+                    return;
+                }
+            }
             pid = atoi(args[0]);
+        }
         else
         {
             printf("Error: Invalid number of arguments given for pinfo.\n");
@@ -158,6 +169,15 @@ void execute_command(char *command, char **args, int i, char *history_file)
     else if (strcmp(command, "repeat") == 0)
     {
         char *pass_command[100];
+        int repeat_length = strlen(args[0]);
+        for (int ab = 0; ab < repeat_length; ab++)
+        {
+            if (!isdigit(args[0][ab]))
+            {
+                printf("Second argument must be an integer.");
+                return;
+            }
+        }
         int command_count = atoi(args[0]);
         for (int x = 0; x < command_count; x++)
         {
@@ -183,7 +203,18 @@ void execute_command(char *command, char **args, int i, char *history_file)
         if (i == 0)
             history(10, history_file);
         else if (i == 1)
+        {
+            int number_length = strlen(args[0]);
+            for (int ab = 0; ab < number_length; ab++)
+            {
+                if (!isdigit(args[0][ab]))
+                {
+                    printf("Second argument can only be a number.");
+                    return;
+                }
+            }
             history(atoi(args[0]), history_file);
+        }
         else
         {
             printf("Error: Invalid number of arguments for history.\n");

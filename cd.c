@@ -17,6 +17,6 @@ void cd(char *cwd, char *home_dir, char *argument, char *previous_directory)
     int path_change = chdir(return_string);
     if (path_change == -1)
     {
-        perror("Directory change");
+        perror("Directory change Error");
     }
 }

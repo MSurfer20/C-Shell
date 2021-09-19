@@ -6,10 +6,10 @@ void print_file_data(char *file_name, char *file_path)
 
     struct stat file_stats;
     int stat_result = stat(file_path, &file_stats);
-    if (stat_result == -1)
+    if (stat_result != 0)
     {
         char err_buf[1100];
-        sprintf(err_buf, "Error reading %s", file_name);
+        sprintf(err_buf, "Error getting stats of %s", file_name);
         perror(err_buf);
         return;
     }
@@ -60,7 +60,7 @@ void print_file_data(char *file_name, char *file_path)
     if (pw == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting owner name of %s\n", file_name);
+        sprintf(err_buf, "\rError getting owner of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -69,7 +69,7 @@ void print_file_data(char *file_name, char *file_path)
     if (grp == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting owner name of %s\n", file_name);
+        sprintf(err_buf, "\rError getting groupid of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -79,7 +79,7 @@ void print_file_data(char *file_name, char *file_path)
     if (file_time == NULL)
     {
         char err_buf[1100];
-        sprintf(err_buf, "\rError getting time name of %s\n", file_name);
+        sprintf(err_buf, "\rError getting time of %s\n", file_name);
         perror(err_buf);
         return;
     }
@@ -95,7 +95,9 @@ void print_file_data(char *file_name, char *file_path)
     struct tm *curr_time_info = localtime(&raw_curr_time);
     if (curr_time_info == NULL)
     {
-        perror("Error getting current time");
+        char err_buf[1100];
+        sprintf(err_buf, "\rError getting current timr");
+        perror(err_buf);
         return;
     }
     char time_array[100];
@@ -107,7 +109,7 @@ void print_file_data(char *file_name, char *file_path)
         if (file_time == NULL)
         {
             char err_buf[1100];
-            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            sprintf(err_buf, "\rError getting time of %s\t", file_name);
             perror(err_buf);
             return;
         }
@@ -120,7 +122,7 @@ void print_file_data(char *file_name, char *file_path)
         if (file_time == NULL)
         {
             char err_buf[1100];
-            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            sprintf(err_buf, "\rError getting time of %s\t", file_name);
             perror(err_buf);
             return;
         }
@@ -133,7 +135,7 @@ void print_file_data(char *file_name, char *file_path)
         if (file_time == NULL)
         {
             char err_buf[1100];
-            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            sprintf(err_buf, "\rError getting time of %s\t", file_name);
             perror(err_buf);
             return;
         }
@@ -146,7 +148,7 @@ void print_file_data(char *file_name, char *file_path)
         if (file_time == NULL)
         {
             char err_buf[1100];
-            sprintf(err_buf, "\rError getting time name of %s\t\t\t", file_name);
+            sprintf(err_buf, "\rError getting time name of %s\t", file_name);
             perror(err_buf);
             return;
         }
@@ -205,11 +207,6 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             }
 
             char *file_name = calloc(1000, sizeof(char));
-            if (!dire)
-            {
-                perror("Opening Directory");
-                continue;
-            }
             if (l_flag)
             {
                 int total_siz = 0;
@@ -258,12 +255,6 @@ void ls(char *home_dir, bool a_flag, bool l_flag, char **argument_list, int arg_
             if (dire == NULL)
             {
                 perror("Couldnt open directory");
-            }
-
-            if (!dire)
-            {
-                perror("Opening Directory");
-                continue;
             }
 
             next_file = readdir(dire);
