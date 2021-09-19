@@ -204,28 +204,49 @@ int main()
 {
     proc_no = 0;
 
-    getcwd(home_dir, 10000);
+    char *test_return;
+    test_return = getcwd(home_dir, 10000);
+    if (test_return == NULL)
+    {
+        perror("Error in getting home directory");
+        return 1;
+    }
+
     strcpy(previous_directory, home_dir);
     if (errno == ERANGE)
     {
-        perror("Prompt details");
+        perror("Buffer size exceeded");
+        return 1;
     }
+
     signal(SIGCHLD, finish_proc);
+    signal(SIGINT, ignoresignal);
+    signal(SIGTSTP, ignoresignal);
     char *history_file = calloc(1000, sizeof(char));
     strcpy(history_file, home_dir);
     strcat(history_file, "/history.txt");
 
-    char *all_commands = calloc(100, sizeof(char));
+    char *all_commands = calloc(1000, sizeof(char));
     char c;
     int prev_command_no = 0;
 
     while (1)
     {
         prev_command_no = 0;
-        getcwd(pwd, 10000);
+
+        test_return = getcwd(pwd, 10000);
+        if (test_return == NULL)
+        {
+            perror("Error in getting home directory");
+            return 1;
+        }
+        if (errno == ERANGE)
+        {
+            perror("Buffer size exceeded");
+            return 1;
+        }
+
         prompt(pwd, home_dir);
-        signal(SIGINT, ignoresignal);
-        signal(SIGTSTP, ignoresignal);
 
         setbuf(stdout, NULL);
         enableRawMode();

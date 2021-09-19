@@ -86,22 +86,33 @@ void print_file_data(char *file_name, char *file_path)
     time_t raw_curr_time;
     time(&raw_curr_time);
     struct tm *curr_time_info = localtime(&raw_curr_time);
+    char time_array[100];
 
     char month_array[12][20] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    printf(" %s", month_array[file_month]);
-    printf(" %2d", file_date);
+    // printf(" %s", month_array[file_month]);
+    // printf(" %2d", file_date);
     if (curr_time_info->tm_year != file_year)
     {
-        printf(" %2d:%2d", file_hour, file_min);
+        file_time = localtime(&file_stats.st_mtim.tv_sec);
+        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        printf("%s", time_array);
     }
     else if (curr_time_info->tm_mon - file_month > 6)
-        printf(" %2d:%2d", file_hour, file_min);
+    {
+        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        printf("%s", time_array);
+    }
     else if ((curr_time_info->tm_mon - file_month == 6) && (curr_time_info->tm_mday > file_date))
-        printf(" %2d:%2d", file_hour, file_min);
+    {
+        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        printf("%s", time_array);
+    }
     else
-        printf(" %4d", file_year);
+    {
+        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
+        printf("%s", time_array);
+    }
 
-    printf(" %d", 1900 + file_time->tm_year);
     printf(" %s", file_name);
     printf("\n");
 }
