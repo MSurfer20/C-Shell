@@ -268,8 +268,9 @@ int main()
     signal(SIGCHLD, finish_proc);
     signal(SIGINT, ignoresignal);
     signal(SIGTSTP, ignoresignal);
+    char *actual_home_path = getenv("HOME");
     char *history_file = calloc(1000, sizeof(char));
-    strcpy(history_file, home_dir);
+    strcpy(history_file, actual_home_path);
     strcat(history_file, "/history.txt");
 
     char *all_commands = calloc(1000, sizeof(char));
