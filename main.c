@@ -168,7 +168,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "repeat") == 0)
     {
-        char *pass_command[100];
+        char *pass_command[1000];
         int repeat_length = strlen(args[0]);
         for (int ab = 0; ab < repeat_length; ab++)
         {
@@ -297,7 +297,7 @@ int main()
 
         setbuf(stdout, NULL);
         enableRawMode();
-        memset(all_commands, '\0', 100);
+        memset(all_commands, '\0', sizeof(all_commands));
         int pt = 0;
         while (read(STDIN_FILENO, &c, 1) == 1)
         {

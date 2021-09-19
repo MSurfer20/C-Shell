@@ -9,7 +9,7 @@ void history(int number_of_commands, char *history_file)
         perror("Error opening history file. Command not added to history.\n");
         return;
     }
-    char line[1000];
+    char line[10000];
     int command_count = 0;
     char last_command[10000];
     char history_commands[20][1000];
@@ -40,11 +40,11 @@ void add_history(char *command, char *history_file)
     if (strlen(command) == 0)
         return;
     FILE *read_file = fopen(history_file, "r");
-    char line[1000];
+    char line[10000];
     int fputs_error = 10;
     int command_count = 0;
     char last_command[10000];
-    char history_commands[20][1000];
+    char history_commands[20][10000];
     if (read_file == NULL && errno != 2)
     {
         perror("Error opening history file. Command not added to history.\n");
@@ -128,7 +128,7 @@ void add_history(char *command, char *history_file)
 char *get_nth_history(int n, char *history_file)
 {
     FILE *read_file = fopen(history_file, "r");
-    char *return_str = calloc(1000, sizeof(char));
+    char *return_str = calloc(10000, sizeof(char));
     if (read_file == NULL)
     {
         if (errno != 2)
@@ -136,10 +136,10 @@ char *get_nth_history(int n, char *history_file)
         strcpy(return_str, "");
         return return_str;
     }
-    char line[1000];
+    char line[10000];
     int command_count = 0;
     char last_command[10000];
-    char history_commands[20][1000];
+    char history_commands[20][10000];
 
     while (fgets(line, sizeof(line), read_file))
     {

@@ -70,7 +70,7 @@ void pinfo(pid_t pid, char *home_dir)
     {
         if (startswith(line, "VmSize:"))
         {
-            char *temp_string = calloc(100, sizeof(char));
+            char *temp_string = calloc(1000, sizeof(char));
             strcpy(temp_string, line + 8);
             temp_string[strlen(temp_string) - 1] = '\0';
             printf("memory -- %s {Virtual Memory}\n", temp_string);

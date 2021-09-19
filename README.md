@@ -34,4 +34,5 @@
 * Tokenized commands-The commands are also tokenized on `;`, which is given highest priority in command processing.
 * exit - I have turned off the interrupt signals for the shell process, and in order to exit the shell, you must use the exit command.
 
-A big assumption taken in this shell's working is that no arguments would contain a 
+* A big assumption taken in this shell's working is that no arguments would contain a backpaced space(like path containing spaces as `\ `).
+* Further, a lot of reasonable assumptions have been taken while doing `calloc` for memory, ranging from 1k characters to 10k characters in most. 
