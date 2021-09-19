@@ -903,9 +903,9 @@ void finish_proc()
         // for (int x = 0; x < 10; x++)
         //     printf("%s", argv[x]);
         if (!WEXITSTATUS(status) && WIFEXITED(status))
-            fprintf(stderr, "%s with PID %d exited normally.\n", argv[0], pid);
+            fprintf(stderr, "\n%s with PID %d exited normally.\n", argv[0], pid);
         else
-            fprintf(stderr, "%s with PID %d exited abnormally.\n", argv[0], pid);
+            fprintf(stderr, "\n%s with PID %d exited abnormally.\n", argv[0], pid);
 
         restart_loop = true;
         for (int y = 0; y < number_of_remove_args; y++)

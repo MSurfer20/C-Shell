@@ -1,7 +1,4 @@
 vim
-vi
-./a.out 1 2 3
-vim
 gedit
 vim &
 gedit &
@@ -17,4 +14,7 @@ pinfo 118266
 ls test test2 pwd.c -al
 gedit &
 ls
+exit
+gedit &
+ls -a
 exit
