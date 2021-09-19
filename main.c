@@ -183,7 +183,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
         {
             for (int y = 2; y < i; y++)
             {
-                pass_command[y - 2] = calloc(strlen(args[y]), sizeof(char));
+                pass_command[y - 2] = calloc(strlen(args[y]) + 20, sizeof(char));
                 strcpy(pass_command[y - 2], args[y]);
             }
             int bc = i - 2;
@@ -242,7 +242,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
         int cmd_len = strlen(command);
         if (command[cmd_len - 1] == '&')
             command[cmd_len - 1] = '\0', backround_process = true;
-        execute_process(command, i, args, backround_process);
+        execute_process(command, i, args, backround_process, home_dir);
     }
 }
 

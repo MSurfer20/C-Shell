@@ -6,17 +6,38 @@ void ignore_signal(int signal)
     return;
 }
 
-void execute_process(char *command, int i, char **args, bool backround_process)
+void execute_process(char *command, int i, char **args, bool backround_process, char *home_dir)
 {
     fflush(stdin);
     char *exec_arguments[i + 2];
+    // if (command[0] == '~')
+    // {
+    //     exec_arguments[0] = calloc(strlen(command) + strlen(home_dir) + 20, sizeof(char));
+    //     // strcpy(exec_arguments[0], ".");
+    //     strcpy(exec_arguments[0], home_dir);
+    //     strcat(exec_arguments[0], command + 1);
+    // }
+    // else
+    // {
     exec_arguments[0] = calloc(strlen(command) + 2, sizeof(char));
     strcpy(exec_arguments[0], command);
+    // }
+    // printf("%s\n", exec_arguments[0]);
     for (int x = 0; x < i; x++)
     {
-        exec_arguments[x + 1] = calloc(strlen(args[x]) + 5, sizeof(char));
-        printf("%s", args[x]);
-        strcpy(exec_arguments[x + 1], args[x]);
+        if (args[x][0] == '~')
+        {
+            exec_arguments[x + 1] = calloc(strlen(args[x]) + strlen(home_dir) + 20, sizeof(char));
+            // printf("%s", args[x]);
+            strcpy(exec_arguments[x + 1], home_dir);
+            strcat(exec_arguments[x + 1], args[x] + 1);
+        }
+        else
+        {
+            exec_arguments[x + 1] = calloc(strlen(args[x]) + 5, sizeof(char));
+            // printf("%s", args[x]);
+            strcpy(exec_arguments[x + 1], args[x]);
+        }
     }
     exec_arguments[i + 1] = (char *)NULL;
 
