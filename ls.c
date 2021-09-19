@@ -124,7 +124,7 @@ void print_file_data(char *file_name, char *file_path)
             perror(err_buf);
             return;
         }
-        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
+        strftime(time_array, sizeof(time_array), " %b %e %Y", file_time);
         printf("%s", time_array);
     }
     else if (curr_time_info->tm_mon - file_month > 6)
@@ -137,7 +137,7 @@ void print_file_data(char *file_name, char *file_path)
             perror(err_buf);
             return;
         }
-        strftime(time_array, sizeof(time_array), " %b %d  %Y", file_time);
+        strftime(time_array, sizeof(time_array), " %b %e  %Y", file_time);
         printf("%s", time_array);
     }
     else if ((curr_time_info->tm_mon - file_month == 6) && (curr_time_info->tm_mday > file_date))
@@ -150,7 +150,7 @@ void print_file_data(char *file_name, char *file_path)
             perror(err_buf);
             return;
         }
-        strftime(time_array, sizeof(time_array), " %b %d %Y", file_time);
+        strftime(time_array, sizeof(time_array), " %b %e %Y", file_time);
         printf("%s", time_array);
     }
     else
@@ -163,7 +163,7 @@ void print_file_data(char *file_name, char *file_path)
             perror(err_buf);
             return;
         }
-        strftime(time_array, sizeof(time_array), " %b %d %H:%M", file_time);
+        strftime(time_array, sizeof(time_array), " %b %e %H:%M", file_time);
         printf("%s", time_array);
     }
 
