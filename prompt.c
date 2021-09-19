@@ -37,7 +37,7 @@ void prompt(char *pwd, char *home_dir)
     if (userstruct == NULL)
     {
         perror("Error in getting username\n");
-        return 0;
+        return;
     }
     char *username = userstruct->pw_name;
     char hostname[10000];
@@ -45,7 +45,7 @@ void prompt(char *pwd, char *home_dir)
     if (hostname_status == -1)
     {
         perror("Hostname error\n");
-        return 0;
+        return;
     }
     printf("<%s@%s:%s>", username, hostname, path_name);
     free(path_name);

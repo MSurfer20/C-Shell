@@ -58,6 +58,7 @@ void execute_process(char *command, int i, char **args, bool backround_process)
         {
             signal(SIGTTOU, SIG_IGN);
             int change_grp_stats = tcsetpgrp(STDIN_FILENO, pid);
+            int status;
             if (change_grp_stats < 0)
             {
                 perror("Error turning the process into a foreground one.");
@@ -65,7 +66,6 @@ void execute_process(char *command, int i, char **args, bool backround_process)
                 if (k_stat < 0)
                     kill(getpid(), SIGKILL);
             }
-            int status;
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
             // printf("\n%d\n", getpgrp());
             tcsetpgrp(STDIN_FILENO, getpgrp());
@@ -101,6 +101,7 @@ void finish_proc()
                 {
                     bg_jobs[y].agrv = bg_jobs[y + 1].agrv;
                     bg_jobs[y].pid = bg_jobs[y + 1].pid;
+                    bg_jobs[y].number_of_args = bg_jobs[y + 1].number_of_args;
                 }
                 proc_no--;
                 int cur_rem = 0;
@@ -119,8 +120,12 @@ void finish_proc()
 
         restart_loop = true;
         for (int y = 0; y < number_of_remove_args; y++)
-            free(argv[y]);
-        free(argv);
+        {
+            if (argv[y] != NULL)
+                free(argv[y]);
+        }
+        if (argv != NULL)
+            free(argv);
         fflush(stdin);
         fflush(stdout);
     }
