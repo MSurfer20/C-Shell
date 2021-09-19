@@ -36,14 +36,16 @@ void prompt(char *pwd, char *home_dir)
     char *path_name = process_path(pwd, home_dir);
     if (userstruct == NULL)
     {
-        perror(("Error in pwid"));
+        perror("Error in getting username\n");
+        return 0;
     }
     char *username = userstruct->pw_name;
     char hostname[10000];
     int hostname_status = gethostname(hostname, 10000);
     if (hostname_status == -1)
     {
-        perror("Hostname error");
+        perror("Hostname error\n");
+        return 0;
     }
     printf("<%s@%s:%s>", username, hostname, path_name);
     free(path_name);

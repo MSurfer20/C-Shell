@@ -36,7 +36,7 @@ void pinfo(pid_t pid, char *home_dir)
         perror("Invalid process");
         return;
     }
-    fscanf(file_ptr, "%s %s %s %s %s %s %s %s", a, b, c, d, e, f, g, h);
+    fscanf(file_ptr, "%s %s %s %s %s %s %s %s %s", a, b, c, d, e, f, g, h, i);
     printf("Process Status -- %s", c);
     // printf("%s\n", a);
     // printf("%s\n", b);

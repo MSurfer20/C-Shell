@@ -1,20 +1,20 @@
-gedit
-zulip
 exit
-gedit
+vim
+vim &
+gedit &
+ls
 exit
-pinfo
-exit
-pinfo
-exit
-pinfo
-exi
-exit
-pinfo
+gedit &
+pinfo 14172
+vim
+pinfo 14275
 exit
 pinfo
 exit
 pinfo
 exit
 pinfo
+vim &
+pinfo 14971
+pinfo 14275
 exit
