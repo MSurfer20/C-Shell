@@ -5,6 +5,7 @@ char *process_path(char *pwd, char *home_dir)
 {
     // printf("PROMPT %s %s\n", pwd, home_dir);
     char temp_path[10000];
+    memset(temp_path, '\0', sizeof(temp_path));
     char *processed_path = calloc(10000, sizeof(char));
     long long home_dir_length = strlen(home_dir);
     long long pwd_length = strlen(pwd);
@@ -16,6 +17,11 @@ char *process_path(char *pwd, char *home_dir)
     }
 
     strncpy(temp_path, pwd, home_dir_length);
+    if (!(pwd[home_dir_length] == '\0' || pwd[home_dir_length] == '/'))
+    {
+        strcpy(processed_path, pwd);
+        return processed_path;
+    }
     if (strcmp(temp_path, home_dir) == 0)
     {
         strcat(processed_path, "~");
