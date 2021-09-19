@@ -1,20 +1,2 @@
-vim
-gedit
-vim &
 gedit &
-exit
-pinfo
-gedit &
-pinfo 118217
-./a.out &
-gedit 118236
-pinfo 118236
-firefox &
-pinfo 118266
-ls test test2 pwd.c -al
-gedit &
-ls
-exit
-gedit &
-ls -a
-exit
+./negative &
