@@ -9,7 +9,8 @@
         "process.h": "c",
         "history.h": "c",
         "signal.h": "c",
-        "sig.h": "c"
+        "sig.h": "c",
+        "stdbool.h": "c"
     },
     "makefile.launchConfigurations": [
         {

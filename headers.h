@@ -14,6 +14,7 @@
 #include <ctype.h>
 #include <termios.h>
 #include <signal.h>
+#include <fcntl.h>
 struct bg_process
 {
     char **agrv;

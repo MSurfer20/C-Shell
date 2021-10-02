@@ -65,6 +65,87 @@ void enableRawMode()
 
 void execute_command(char *command, char **args, int i, char *history_file)
 {
+    char input_file[1000], output_file[1000];
+    int standard_inp = dup(STDIN_FILENO);
+    int standard_output = dup(STDOUT_FILENO);
+    int input_redir = 0, output_redir = 0;
+
+    for (int x = 0; x < i; x++)
+    {
+        if (strcmp(args[x], "<") == 0)
+        {
+            strcpy(input_file, args[x + 1]);
+            // free(args[x]);
+            // free(args[x + 1]);
+            for (int y = x + 2; y < i; y++)
+            {
+                args[y - 2] = args[y];
+            }
+            i -= 2;
+            x--;
+            input_redir = 1;
+        }
+        else if (strcmp(args[x], ">") == 0)
+        {
+            strcpy(output_file, args[x + 1]);
+            // free(args[x]);
+            // free(args[x + 1]);
+            for (int y = x + 2; y < i; y++)
+            {
+                args[y - 2] = args[y];
+            }
+            i -= 2;
+            x--;
+            output_redir = 1;
+        }
+        else if (strcmp(args[x], ">>") == 0)
+        {
+            strcpy(output_file, args[x + 1]);
+            // free(args[x]);
+            // free(args[x + 1]);
+            for (int y = x + 2; y < i; y++)
+            {
+                args[y - 2] = args[y];
+            }
+            i -= 2;
+            x--;
+            output_redir = 2;
+        }
+    }
+
+    if (input_redir)
+    {
+        int inp_fd = open(input_file, O_RDONLY);
+        if (inp_fd < 0)
+        {
+            perror("Error opening input file");
+            return;
+        }
+        dup2(inp_fd, 0);
+    }
+
+    if (output_redir == 1)
+    {
+        int op_fd = open(output_file, O_CREAT | O_WRONLY, 0644);
+        if (op_fd < 0)
+        {
+            perror("Error opening output file");
+            return;
+        }
+        dup2(op_fd, 1);
+    }
+
+    if (output_redir == 2)
+    {
+        int op_fd = open(output_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+        if (op_fd < 0)
+        {
+            perror("Error opening output file");
+            return;
+        }
+        dup2(op_fd, 1);
+    }
+
     if (strcmp(command, "echo") == 0)
     {
         echo(args, i);
@@ -274,6 +355,9 @@ void execute_command(char *command, char **args, int i, char *history_file)
             command[cmd_len - 1] = '\0', backround_process = true;
         execute_process(command, i, args, backround_process, home_dir);
     }
+
+    dup2(standard_inp, 0);
+    dup2(standard_output, 1);
 }
 
 int main()

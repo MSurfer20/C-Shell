@@ -85,15 +85,15 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
         else
         {
             signal(SIGTTOU, SIG_IGN);
-            int change_grp_stats = tcsetpgrp(STDIN_FILENO, pid);
+            // int change_grp_stats = tcsetpgrp(STDIN_FILENO, pid);
             int status;
-            if (change_grp_stats < 0)
-            {
-                perror("Error turning the process into a foreground one.");
-                int k_stat = kill(getpid(), SIGTERM);
-                if (k_stat < 0)
-                    kill(getpid(), SIGKILL);
-            }
+            // if (change_grp_stats < 0)
+            // {
+            //     perror("Error turning the process into a foreground one.");
+            //     int k_stat = kill(getpid(), SIGTERM);
+            //     if (k_stat < 0)
+            //         kill(getpid(), SIGKILL);
+            // }
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
             // printf("\n%d\n", getpgrp());
             tcsetpgrp(STDIN_FILENO, getpgrp());
