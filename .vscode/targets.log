@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Sep 19 22:59:53 2021
+# Make data base, printed on Sun Oct  3 02:35:35 2021
 
 # Variables
 
@@ -41,7 +41,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode
+CURDIR := /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2
 # makefile
 SHELL = /bin/sh
 # environment
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:51930
+JOURNAL_STREAM = 8:51006
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -69,11 +69,11 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1629
+MANAGERPID = 1981
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-3596e7c2-9227-4f80-b297-7385a2192756.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e6325e74-1b03-4fdd-9b57-a7dcc7f2d345.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
@@ -85,7 +85,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2144,unix/suyash:/tmp/.ICE-unix/2144
+SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2221,unix/suyash:/tmp/.ICE-unix/2221
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -95,7 +95,7 @@ VSCODE_LOG_STACK = false
 # environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=29f12441-f453-437b-8757-4e5645c4afac&iid=29f12441-f453-437b-8757-4e5645c4afac&sid=29f12441-f453-437b-8757-4e5645c4afac","uploadToServer":true}
 # environment
-INVOCATION_ID = 478b2293bb9b4dacb9f1ff15775fcebc
+INVOCATION_ID = d6618e7c47784d1ca7745acd726bae57
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -105,7 +105,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2873
+GIO_LAUNCHED_DESKTOP_FILE_PID = 22720
 # automatic
 %F = $(notdir $%)
 # environment
@@ -113,11 +113,11 @@ DISPLAY = :0
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode
+PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2102
+SSH_AGENT_PID = 2179
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -223,7 +223,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2873
+VSCODE_PID = 22720
 # variable set hash-table stats:
 # Load=106/1024=10%, Rehash=0, Collisions=13/131=10%
 
@@ -233,9 +233,9 @@ VSCODE_PID = 2873
 
 # Directories
 
-# . (device 2050, inode 20972362): 25 files, no impossibilities.
+# . (device 2050, inode 20972362): 29 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -253,7 +253,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-17 19:02:03.915347961
+#  Last modified 2021-10-03 02:35:13.36063315
 #  File has been updated.
 #  Successfully updated.
 
@@ -262,7 +262,7 @@ default:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 2):
-	gcc -g main.c prompt.c cd.c echo.c pwd.c ls.c process.c pinfo.c history.c -o svsh.out
+	gcc -g main.c prompt.c cd.c echo.c pwd.c ls.c process.c jobs.c pinfo.c history.c sig.c -o svsh.out
 
 # Not a target:
 .DEFAULT:
@@ -278,13 +278,13 @@ default:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 246 B / avg = 7 B
-# current buf: size = 8162 B / used = 246 B / count = 31 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 272 B / avg = 7 B
+# current buf: size = 8162 B / used = 272 B / count = 35 / avg = 7 B
 
-# strcache performance: lookups = 36 / hit rate = 13%
-# hash-table stats:
+# strcache performance: lookups = 40 / hit rate = 12%
  
-# Load=31/8192=0%, Rehash=0, Collisions=1/36=3%
-# Finished Make data base on Sun Sep 19 22:59:53 2021
+# hash-table stats:
+# Load=35/8192=0%, Rehash=0, Collisions=1/40=2%
+# Finished Make data base on Sun Oct  3 02:35:35 2021
 
  

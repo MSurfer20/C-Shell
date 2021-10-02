@@ -78,6 +78,7 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
             bg_jobs[proc_no].agrv[i + 2] = NULL;
             bg_jobs[proc_no].pid = pid;
             bg_jobs[proc_no].number_of_args = i + 1;
+            bg_jobs[proc_no].run_status = 1;
             proc_no++;
             printf("%d\n", pid);
         }
@@ -121,17 +122,18 @@ void finish_proc()
             if (bg_jobs[x].pid == pid)
             {
                 flag = true;
-                argv = bg_jobs[x].agrv;
-                number_of_remove_args = bg_jobs[x].number_of_args;
+                // argv = bg_jobs[x].agrv;
+                // number_of_remove_args = bg_jobs[x].number_of_args;
 
-                for (int y = x; y < proc_no - 1; y++)
-                {
-                    bg_jobs[y].agrv = bg_jobs[1 + y].agrv;
-                    bg_jobs[y].pid = bg_jobs[1 + y].pid;
-                    bg_jobs[y].number_of_args = bg_jobs[1 + y].number_of_args;
-                }
-                proc_no--;
-                int cur_rem = 0;
+                // for (int y = x; y < proc_no - 1; y++)
+                // {
+                //     bg_jobs[y].agrv = bg_jobs[1 + y].agrv;
+                //     bg_jobs[y].pid = bg_jobs[1 + y].pid;
+                //     bg_jobs[y].number_of_args = bg_jobs[1 + y].number_of_args;
+                // }
+                // proc_no--;
+                bg_jobs[x].run_status = 0;
+                // int cur_rem = 0;
                 break;
             }
         }
@@ -146,13 +148,13 @@ void finish_proc()
             fprintf(stderr, "\n%s with PID %d exited abnormally.\n", argv[0], pid);
 
         restart_loop = true;
-        for (int y = 0; y < number_of_remove_args; y++)
-        {
-            if (argv[y] != NULL)
-                free(argv[y]);
-        }
-        if (argv != NULL)
-            free(argv);
+        // for (int y = 0; y < number_of_remove_args; y++)
+        // {
+        //     if (argv[y] != NULL)
+        //         free(argv[y]);
+        // }
+        // if (argv != NULL)
+        //     free(argv);
         fflush(stdin);
         fflush(stdout);
     }

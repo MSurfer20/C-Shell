@@ -1,5 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode'
-gcc -g main.c prompt.c cd.c echo.c pwd.c ls.c process.c pinfo.c history.c -o svsh.out
-make: Leaving directory '/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/StarterCode'
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2'
+gcc -g main.c prompt.c cd.c echo.c pwd.c ls.c process.c jobs.c pinfo.c history.c sig.c -o svsh.out
+make: Leaving directory '/home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2'
  

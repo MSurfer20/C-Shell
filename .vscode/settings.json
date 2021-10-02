@@ -7,7 +7,9 @@
         "ls.h": "c",
         "stdio.h": "c",
         "process.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "signal.h": "c",
+        "sig.h": "c"
     },
     "makefile.launchConfigurations": [
         {

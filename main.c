@@ -7,6 +7,8 @@
 #include "process.h"
 #include "pinfo.h"
 #include "history.h"
+#include "jobs.h"
+#include "sig.h"
 
 char home_dir[10000], pwd[10000];
 char previous_directory[10000];
@@ -222,6 +224,34 @@ void execute_command(char *command, char **args, int i, char *history_file)
         }
     }
 
+    else if (strcmp(command, "jobs") == 0)
+    {
+        int job_type = 0;
+        for (int x = 0; x < i; x++)
+        {
+            char *ag = args[x];
+            if (ag[0] == '-')
+            {
+                int ag_len = strlen(ag);
+                for (int y = 0; y < ag_len; y++)
+                {
+                    if (ag[y] == 's')
+                        job_type = 1;
+                    else if (ag[y] == 'r')
+                        job_type = 2;
+                }
+            }
+        }
+        jobs(job_type);
+    }
+
+    else if (strcmp(command, "sig") == 0)
+    {
+        int job_no = atoi(args[0]);
+        int signal_number = atoi(args[1]);
+        sig(job_no, signal_number);
+    }
+
     else
     {
         bool backround_process = false;
@@ -248,6 +278,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
 int main()
 {
+    proc_no = 0;
     proc_no = 0;
 
     char *test_return;

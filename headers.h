@@ -19,6 +19,7 @@ struct bg_process
     char **agrv;
     pid_t pid;
     int number_of_args;
+    int run_status;
 };
 
 struct bg_process bg_jobs[1000];
