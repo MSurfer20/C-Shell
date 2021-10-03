@@ -18,7 +18,30 @@ void jobs(int job_type)
             strcat(argv[x], " ");
             strcat(argv[x], bg_jobs[x].agrv[y]);
         }
-        run_status[x] = bg_jobs[x].run_status;
+
+        FILE *file_ptr;
+        char *line = NULL;
+
+        char *proc_name = calloc(10000, sizeof(char));
+        char *proc_file = calloc(10000, sizeof(char));
+        sprintf(proc_name, "/proc/%d", pid[x]);
+        strcpy(proc_file, proc_name);
+        strcat(proc_file, "/stat");
+        char a[1000], b[1000], c[1000], d[1000], e[1000], f[1000], g[1000], h[1000], i[1000];
+        size_t len = 0;
+        ssize_t read;
+
+        file_ptr = fopen(proc_file, "r");
+        if (file_ptr == NULL)
+        {
+            perror("Invalid process");
+            return;
+        }
+        fscanf(file_ptr, "%s %s %s %s %s %s %s %s %s", a, b, c, d, e, f, g, h, i);
+        if (strcmp(c, "T") == 0)
+            run_status[x] = 0;
+        else
+            run_status[x] = 1;
     }
 
     int i, j, min_idx, temp_run, temp_job_no;
