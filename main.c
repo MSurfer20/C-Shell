@@ -9,6 +9,8 @@
 #include "history.h"
 #include "jobs.h"
 #include "sig.h"
+#include "fg.h"
+#include "bg.h"
 
 char home_dir[10000], pwd[10000];
 char previous_directory[10000];
@@ -17,6 +19,12 @@ char temp_directory[10000];
 void ignoresignal(int signal)
 {
     return;
+}
+
+void exitfunction(int signal)
+{
+    printf("BRUH");
+    exit(0);
 }
 
 void die(const char *s)
@@ -333,6 +341,28 @@ void execute_command(char *command, char **args, int i, char *history_file)
         sig(job_no, signal_number);
     }
 
+    else if (strcmp(command, "fg") == 0)
+    {
+        if (i != 1)
+        {
+            printf("Error: Number of arguments should be exactly 1.\n");
+            return;
+        }
+        int job_no = atoi(args[0]);
+        fg(job_no);
+    }
+
+    else if (strcmp(command, "bg") == 0)
+    {
+        if (i != 1)
+        {
+            printf("Error: Number of arguments should be exactly 1.\n");
+            return;
+        }
+        int job_no = atoi(args[0]);
+        bg(job_no);
+    }
+
     else
     {
         bool backround_process = false;
@@ -383,6 +413,8 @@ int main()
     signal(SIGCHLD, finish_proc);
     signal(SIGINT, ignoresignal);
     signal(SIGTSTP, ignoresignal);
+    signal(SIGILL, exitfunction);
+
     char *actual_home_path = getenv("HOME");
     char *history_file = calloc(1000, sizeof(char));
     strcpy(history_file, actual_home_path);
@@ -468,6 +500,10 @@ int main()
                 // {
                 //     exit(0);
                 // }
+                else if (c == 4)
+                {
+                    return 0;
+                }
                 else
                 {
                     printf("%d\n", c);
