@@ -422,6 +422,17 @@ void stop_signal()
     kill(curr_pid, SIGTSTP);
 }
 
+void kill_proc()
+{
+    printf("BRUHHHHHHHHHHH");
+    if (getpid() == shell_pid)
+        return;
+    if (curr_pid != -1)
+    {
+        kill(curr_pid, SIGINT);
+    }
+}
+
 int main()
 {
     proc_no = 0;
@@ -445,7 +456,7 @@ int main()
     }
 
     signal(SIGCHLD, finish_proc);
-    signal(SIGINT, SIG_IGN);
+    signal(SIGINT, kill_proc);
     signal(SIGTSTP, stop_signal);
     signal(SIGILL, exitfunction);
 

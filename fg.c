@@ -35,10 +35,14 @@ void fg(int job_no)
     kill(pid, SIGCONT);
     pid_t wtpid = waitpid(pid, &status, WUNTRACED);
     // printf("\n%d\n", getpgrp());
+    // printf("BRUHHH");
     tcsetpgrp(0, getpgrp());
-    signal(SIGTTIN, SIG_DFL);
+    // signal(SIGTTIN, SIG_DFL);
     signal(SIGTTOU, SIG_DFL);
+    curr_pid = pid;
+    curr_job_args = job_args;
     int i = arg_count - 1;
+    curr_job_args_count = i;
     if (WIFSTOPPED(status))
     {
         int flag = 1;
