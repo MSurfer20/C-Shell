@@ -26,3 +26,6 @@ struct bg_process bg_jobs[1000];
 
 int proc_no;
 bool restart_loop;
+
+int shell_pid, curr_pid, curr_job_args_count;
+char **curr_job_args;

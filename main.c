@@ -390,10 +390,44 @@ void execute_command(char *command, char **args, int i, char *history_file)
     dup2(standard_output, 1);
 }
 
+void stop_signal()
+{
+    printf("YASSSSS");
+    if (getpid() != shell_pid || curr_pid == -1)
+        return;
+    int flag = 1;
+    for (int x = 0; x < proc_no; x++)
+    {
+        if (bg_jobs[x].pid == curr_pid)
+        {
+            flag = 0;
+            break;
+        }
+    }
+    if (flag)
+    {
+        bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
+        bg_jobs[proc_no].agrv = calloc(curr_job_args_count + 4, sizeof(char *));
+        for (int y = 0; y < curr_job_args_count; y++)
+        {
+            bg_jobs[proc_no].agrv[y] = calloc(strlen(curr_job_args[y]) + 10, sizeof(char));
+            strcpy(bg_jobs[proc_no].agrv[y], curr_job_args[y]);
+        }
+        bg_jobs[proc_no].agrv[curr_job_args_count + 2] = NULL;
+        bg_jobs[proc_no].pid = curr_pid;
+        bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
+        proc_no++;
+        printf("%d pushed to background\n", curr_pid);
+    }
+    kill(curr_pid, SIGTSTP);
+}
+
 int main()
 {
     proc_no = 0;
     proc_no = 0;
+    shell_pid = getpid();
+    curr_pid = shell_pid;
 
     char *test_return;
     test_return = getcwd(home_dir, 10000);
@@ -411,8 +445,8 @@ int main()
     }
 
     signal(SIGCHLD, finish_proc);
-    signal(SIGINT, ignoresignal);
-    signal(SIGTSTP, ignoresignal);
+    signal(SIGINT, SIG_IGN);
+    signal(SIGTSTP, stop_signal);
     signal(SIGILL, exitfunction);
 
     char *actual_home_path = getenv("HOME");

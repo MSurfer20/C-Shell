@@ -38,4 +38,33 @@ void fg(int job_no)
     tcsetpgrp(0, getpgrp());
     signal(SIGTTIN, SIG_DFL);
     signal(SIGTTOU, SIG_DFL);
+    int i = arg_count - 1;
+    if (WIFSTOPPED(status))
+    {
+        int flag = 1;
+        for (int x = 0; x < proc_no; x++)
+        {
+            if (bg_jobs[x].pid == curr_pid)
+            {
+                flag = 0;
+                break;
+            }
+        }
+        if (flag)
+        {
+            bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
+            for (int y = 0; y < i + 1; y++)
+            {
+                bg_jobs[proc_no].agrv[y] = calloc(strlen(job_args[y]) + 10, sizeof(char));
+                strcpy(bg_jobs[proc_no].agrv[y], job_args[y]);
+            }
+            bg_jobs[proc_no].agrv[i + 2] = NULL;
+            bg_jobs[proc_no].pid = pid;
+            bg_jobs[proc_no].number_of_args = i + 1;
+            proc_no++;
+        }
+        printf("%d pushed to background\n", curr_pid);
+        kill(curr_pid, SIGTSTP);
+    }
+    // printf("\n");
 }

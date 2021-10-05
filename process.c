@@ -6,6 +6,38 @@ void ignore_signal(int signal)
     return;
 }
 
+void push_to_bkg(int signal)
+{
+    printf("YASSSSS");
+    if (getpid() != shell_pid || curr_pid == -1)
+        return;
+    int flag = 1;
+    for (int x = 0; x < proc_no; x++)
+    {
+        if (bg_jobs[x].pid == curr_pid)
+        {
+            flag = 0;
+            break;
+        }
+    }
+    if (flag)
+    {
+        bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
+        bg_jobs[proc_no].agrv = calloc(curr_job_args_count + 4, sizeof(char *));
+        for (int y = 0; y < curr_job_args_count; y++)
+        {
+            bg_jobs[proc_no].agrv[y] = calloc(strlen(curr_job_args[y]) + 10, sizeof(char));
+            strcpy(bg_jobs[proc_no].agrv[y], curr_job_args[y]);
+        }
+        bg_jobs[proc_no].agrv[curr_job_args_count + 2] = NULL;
+        bg_jobs[proc_no].pid = curr_pid;
+        bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
+        proc_no++;
+        printf("%d pushed to background\n", curr_pid);
+    }
+    kill(curr_pid, SIGTSTP);
+}
+
 void execute_process(char *command, int i, char **args, bool backround_process, char *home_dir)
 {
     fflush(stdin);
@@ -83,8 +115,12 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
         }
         else
         {
+            curr_pid = pid;
+            curr_job_args = exec_arguments;
+            curr_job_args_count = i;
             signal(SIGTTIN, SIG_IGN);
             signal(SIGTTOU, SIG_IGN);
+            // signal(SIGTSTP, push_to_bkg);
             int change_grp_stats = tcsetpgrp(0, pid);
             int status;
             if (change_grp_stats < 0)
@@ -99,6 +135,33 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
             tcsetpgrp(0, getpgrp());
             signal(SIGTTIN, SIG_DFL);
             signal(SIGTTOU, SIG_DFL);
+            if (WIFSTOPPED(status))
+            {
+                int flag = 1;
+                for (int x = 0; x < proc_no; x++)
+                {
+                    if (bg_jobs[x].pid == curr_pid)
+                    {
+                        flag = 0;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
+                    for (int y = 0; y < i + 1; y++)
+                    {
+                        bg_jobs[proc_no].agrv[y] = calloc(strlen(exec_arguments[y]) + 10, sizeof(char));
+                        strcpy(bg_jobs[proc_no].agrv[y], exec_arguments[y]);
+                    }
+                    bg_jobs[proc_no].agrv[i + 2] = NULL;
+                    bg_jobs[proc_no].pid = pid;
+                    bg_jobs[proc_no].number_of_args = i + 1;
+                    proc_no++;
+                }
+                printf("%d pushed to background\n", curr_pid);
+                kill(curr_pid, SIGTSTP);
+            }
             // printf("\n");
         }
     }
