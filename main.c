@@ -469,6 +469,12 @@ void parse_pipe(char *each_command, char *history_file)
         if (each_command[x] == '|')
             pipe_count++;
 
+    if (pipe_count == 0)
+    {
+        run_command(each_command, history_file);
+        return;
+    }
+
     char *savepointer3;
     char *token = strtok_r(each_command, "|", &savepointer3);
     int command_no = 0;
