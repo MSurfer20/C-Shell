@@ -366,6 +366,51 @@ void execute_command(char *command, char **args, int i, char *history_file)
         bg(job_no);
     }
 
+    else if (strcmp(command, "replay") == 0)
+    {
+        int interval = 3, period = 6;
+        for (int x = 0; x < i;)
+        {
+            if (strcmp(args[x], "-command") == 0)
+            {
+                for (int y = x; y < i - 1; y++)
+                    args[y] = args[y + 1];
+                i--;
+                // printf(" 1\n");
+            }
+            else if (strcmp(args[x], "-interval") == 0)
+            {
+                interval = atoi(args[x + 1]);
+                for (int y = x; y < i - 2; y++)
+                    args[y] = args[y + 2];
+                i -= 2;
+                // printf(" 2\n");
+            }
+            else if (strcmp(args[x], "-period") == 0)
+            {
+                period = atoi(args[x + 1]);
+                for (int y = x; y < i - 2; y++)
+                    args[y] = args[y + 2];
+                i -= 2;
+                // printf(" 3\n");
+            }
+            else
+                x++;
+        }
+        // printf("%d\n", i);
+        // for (int x = 0; x < i; x++)
+        //     printf("%s ", args[x]);
+        // printf("\n%d %d", period, interval);
+        int number_of_time = period / interval;
+        for (int x = 0; x < number_of_time; x++)
+        {
+            sleep(interval);
+            execute_command(args[0], args + 1, i - 1, history_file);
+        }
+        int remaining_time = period % interval;
+        sleep(remaining_time);
+    }
+
     else
     {
         bool backround_process = false;
@@ -427,7 +472,6 @@ void stop_signal()
 
 void kill_proc()
 {
-    // printf("BRUHHHHHHHHHHH");
     if (getpid() == shell_pid)
         return;
     if (curr_pid != -1)
