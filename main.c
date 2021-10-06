@@ -29,7 +29,7 @@ void exitfunction(int signal)
 
 void die(const char *s)
 {
-    perror(s);
+    // perror(s);
     exit(1);
 }
 
@@ -74,8 +74,8 @@ void enableRawMode()
 void execute_command(char *command, char **args, int i, char *history_file)
 {
     char input_file[1000], output_file[1000];
-    int standard_inp = dup(STDIN_FILENO);
-    int standard_output = dup(STDOUT_FILENO);
+    int standard_inp = dup(STDOUT_FILENO);
+    int standard_output = dup(STDIN_FILENO);
     int input_redir = 0, output_redir = 0;
 
     for (int x = 0; x < i; x++)
@@ -135,13 +135,14 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     if (output_redir == 1)
     {
-        int op_fd = open(output_file, O_CREAT | O_WRONLY, 0644);
+        int op_fd = open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
         if (op_fd < 0)
         {
             perror("Error opening output file");
             return;
         }
         dup2(op_fd, 1);
+        close(op_fd);
     }
 
     if (output_redir == 2)
@@ -153,6 +154,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
             return;
         }
         dup2(op_fd, 1);
+        close(op_fd);
     }
 
     if (strcmp(command, "echo") == 0)
@@ -393,8 +395,8 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
 void stop_signal()
 {
-    printf("YASSSSS");
-    if (getpid() != shell_pid || curr_pid == -1)
+    // printf("YASSSSS");
+    if (getpid() == shell_pid || curr_pid == -1)
         return;
     int flag = 1;
     for (int x = 0; x < proc_no; x++)
@@ -425,7 +427,7 @@ void stop_signal()
 
 void kill_proc()
 {
-    printf("BRUHHHHHHHHHHH");
+    // printf("BRUHHHHHHHHHHH");
     if (getpid() == shell_pid)
         return;
     if (curr_pid != -1)

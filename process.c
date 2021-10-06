@@ -8,8 +8,8 @@ void ignore_signal(int signal)
 
 void push_to_bkg(int signal)
 {
-    printf("YASSSSS");
-    if (getpid() != shell_pid || curr_pid == -1)
+    // printf("YASSSSS");
+    if (getpid() == shell_pid || curr_pid == -1)
         return;
     int flag = 1;
     for (int x = 0; x < proc_no; x++)
