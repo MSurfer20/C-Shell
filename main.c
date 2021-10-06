@@ -130,6 +130,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
             return;
         }
         dup2(inp_fd, 0);
+        close(inp_fd);
     }
 
     if (output_redir == 1)

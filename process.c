@@ -123,13 +123,13 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
             // signal(SIGTSTP, push_to_bkg);
             int change_grp_stats = tcsetpgrp(0, pid);
             int status;
-            if (change_grp_stats < 0)
-            {
-                perror("Error turning the process into a foreground one.");
-                int k_stat = kill(getpid(), SIGTERM);
-                if (k_stat < 0)
-                    kill(getpid(), SIGKILL);
-            }
+            // if (change_grp_stats < 0)
+            // {
+            //     perror("Error turning the process into a foreground one.");
+            //     int k_stat = kill(getpid(), SIGTERM);
+            //     if (k_stat < 0)
+            //         kill(getpid(), SIGKILL);
+            // }
             pid_t wtpid = waitpid(pid, &status, WUNTRACED);
             // printf("\n%d\n", getpgrp());
             tcsetpgrp(0, getpgrp());

@@ -1,1 +1,16 @@
-ABCD
+Got 5 arguments:
+1: |./args_printer|
+2: |a|
+3: |b|
+4: |c|
+5: |d|
+
+|d|
+
+Got 5 arguments:
+1: |./args_printer|
+2: |a|
+3: |b|
+4: |c|
+5: |d|
+
