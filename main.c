@@ -434,6 +434,84 @@ void kill_proc()
     }
 }
 
+void run_command(char *each_command, char *history_file)
+{
+    char *savepointer2;
+    char *token = strtok_r(each_command, " \t", &savepointer2);
+    char *command = token;
+
+    char *args[100];
+    int i = 0;
+    token = strtok_r(NULL, " \t", &savepointer2);
+    while (token != NULL)
+    {
+        args[i] = token;
+        i++;
+        token = strtok_r(NULL, " \t", &savepointer2);
+    }
+
+    if (strcmp(command, "exit") == 0)
+    {
+        exit(0);
+        printf("BRUH");
+    }
+
+    execute_command(command, args, i, history_file);
+}
+
+void parse_pipe(char *each_command, char *history_file)
+{
+    int pipe_count = 0, pipe_fd[2], input_fd = STDIN_FILENO, saved_output = dup(STDOUT_FILENO);
+    // WTF WHY SAME STDOUT??!!
+    int save_in = dup(STDIN_FILENO);
+    int command_length = strlen(each_command);
+    for (int x = 0; x < command_length; x++)
+        if (each_command[x] == '|')
+            pipe_count++;
+
+    char *savepointer3;
+    char *token = strtok_r(each_command, "|", &savepointer3);
+    int command_no = 0;
+
+    while (token != NULL)
+    {
+        // printf("%s\n", token);
+        int pipe_return = pipe(pipe_fd);
+        if (pipe_return < 0)
+        {
+            perror("Error piping the commands");
+            return;
+        }
+
+        pid_t child_command_proc = fork();
+        if (child_command_proc < 0)
+        {
+            perror("Error forking process");
+            return;
+        }
+        else if (child_command_proc == 0)
+        {
+            dup2(input_fd, STDIN_FILENO);
+            if (command_no != pipe_count)
+                dup2(pipe_fd[1], STDOUT_FILENO);
+            close(pipe_fd[0]);
+            run_command(token, history_file);
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            wait(NULL);
+            close(pipe_fd[1]);
+            input_fd = pipe_fd[0];
+        }
+
+        token = strtok_r(NULL, "|", &savepointer3);
+        command_no += 1;
+    }
+    dup2(save_in, STDIN_FILENO);
+    dup2(saved_output, STDOUT_FILENO);
+}
+
 int main()
 {
     proc_no = 0;
@@ -566,7 +644,7 @@ int main()
         printf("\n");
 
         char *each_command;
-        char *savepointer1, *savepointer2;
+        char *savepointer1;
         int all_commands_length = strlen(all_commands);
         if (all_commands_length == 0)
             continue;
@@ -583,25 +661,7 @@ int main()
 
         while (each_command != NULL)
         {
-            char *token = strtok_r(each_command, " \t", &savepointer2);
-            char *command = token;
-            char *args[100];
-            int i = 0;
-            token = strtok_r(NULL, " \t", &savepointer2);
-            while (token != NULL)
-            {
-                args[i] = token;
-                i++;
-                token = strtok_r(NULL, " \t", &savepointer2);
-            }
-
-            if (strcmp(command, "exit") == 0)
-            {
-                return 0;
-            }
-
-            execute_command(command, args, i, history_file);
-
+            parse_pipe(each_command, history_file);
             each_command = strtok_r(NULL, ";", &savepointer1);
         }
         fflush(stdin);
