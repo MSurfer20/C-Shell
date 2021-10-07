@@ -75,7 +75,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 {
     char input_file[1000], output_file[1000];
     int standard_inp = dup(STDOUT_FILENO);
-    int standard_output = dup(STDIN_FILENO);
+    int standard_output = dup(STDOUT_FILENO);
     int input_redir = 0, output_redir = 0;
 
     for (int x = 0; x < i; x++)
@@ -484,8 +484,8 @@ void execute_command(char *command, char **args, int i, char *history_file)
         execute_process(command, i, args, backround_process, home_dir);
     }
 
-    dup2(standard_inp, 0);
-    dup2(standard_output, 1);
+    dup2(standard_inp, STDIN_FILENO);
+    dup2(standard_output, STDOUT_FILENO);
 }
 
 void stop_signal()
