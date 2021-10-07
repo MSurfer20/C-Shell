@@ -51,8 +51,15 @@ void jobs(int job_type)
     {
         min_idx = i;
         for (j = i + 1; j < proc_no; j++)
+        {
             if (strcmp(argv[j], argv[min_idx]) < 0)
                 min_idx = j;
+            else if (strcmp(argv[j], argv[min_idx]) == 0)
+            {
+                if (pid[j] < pid[min_idx])
+                    min_idx = j;
+            }
+        }
         temp_pid = pid[min_idx];
         strcpy(temp_name, argv[min_idx]);
         temp_run = run_status[min_idx];
