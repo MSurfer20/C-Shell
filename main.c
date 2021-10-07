@@ -74,7 +74,7 @@ void enableRawMode()
 void execute_command(char *command, char **args, int i, char *history_file)
 {
     char input_file[1000], output_file[1000];
-    int standard_inp = dup(STDOUT_FILENO);
+    int standard_inp = dup(STDIN_FILENO);
     int standard_output = dup(STDOUT_FILENO);
     int input_redir = 0, output_redir = 0;
 
