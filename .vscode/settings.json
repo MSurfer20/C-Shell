@@ -10,7 +10,8 @@
         "history.h": "c",
         "signal.h": "c",
         "sig.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "baywatch.h": "c"
     },
     "makefile.launchConfigurations": [
         {

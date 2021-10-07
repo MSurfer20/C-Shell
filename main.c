@@ -11,6 +11,7 @@
 #include "sig.h"
 #include "fg.h"
 #include "bg.h"
+#include "baywatch.h"
 
 char home_dir[10000], pwd[10000];
 char previous_directory[10000];
@@ -409,6 +410,25 @@ void execute_command(char *command, char **args, int i, char *history_file)
         }
         int remaining_time = period % interval;
         sleep(remaining_time);
+    }
+
+    else if (strcmp(command, "baywatch") == 0)
+    {
+        int time = 1, command_id = 0;
+        for (int x = 0; x < i; x++)
+        {
+            if (strcmp(args[x], "-n") == 0)
+            {
+                time = atoi(args[x + 1]);
+            }
+            else if (strcmp(args[x], "interrupt") == 0)
+                command_id = 0;
+            else if (strcmp(args[x], "newborn") == 0)
+                command_id = 1;
+            else if (strcmp(args[x], "dirty") == 0)
+                command_id = 3;
+        }
+        baywatch(time, command_id);
     }
 
     else

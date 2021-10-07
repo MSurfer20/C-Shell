@@ -15,6 +15,8 @@
 #include <termios.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/select.h>
+
 struct bg_process
 {
     char **agrv;
