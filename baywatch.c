@@ -128,8 +128,62 @@ void interrupt(int time)
     }
 }
 
+void newborn(int time)
+{
+    int pid = fork();
+    if (pid < 0)
+    {
+        perror("Error in parallelizing");
+        return;
+    }
+    else if (pid == 0)
+    {
+        while (true)
+        {
+            FILE *fil = fopen("/proc/loadavg", "r");
+            if (fil == NULL)
+            {
+                perror("Error opening interrupts file");
+                return;
+            }
+            char line[1000];
+            char a[1000], b[1000], c[1000], d[1000], e[1000];
+            fscanf(fil, "%s %s %s %s %s", a, b, c, d, e);
+            // printf("%s\n", line);
+            printf("PID of last process created: %s\n", e);
+            sleep(time);
+            fclose(fil);
+        }
+    }
+    else
+    {
+        char c;
+        setbuf(stdout, NULL);
+        enableRawModez();
+        while (read(STDIN_FILENO, &c, 1) == 1)
+        {
+            if (iscntrl(c))
+            {
+            }
+            else
+            {
+                if (c == 113)
+                {
+                    if (kill(pid, SIGTERM) < 0)
+                        kill(pid, SIGKILL);
+                    return;
+                }
+                break;
+            }
+        }
+        disableRawModez();
+    }
+}
+
 void baywatch(int time, int command_id)
 {
     if (command_id == 0)
         interrupt(time);
+    else if (command_id == 1)
+        newborn(time);
 }
