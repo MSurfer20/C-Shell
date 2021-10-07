@@ -402,14 +402,45 @@ void execute_command(char *command, char **args, int i, char *history_file)
         // for (int x = 0; x < i; x++)
         //     printf("%s ", args[x]);
         // printf("\n%d %d", period, interval);
-        int number_of_time = period / interval;
-        for (int x = 0; x < number_of_time; x++)
+        pid_t pid = fork();
+        if (pid < 0)
         {
-            sleep(interval);
-            execute_command(args[0], args + 1, i - 1, history_file);
+            perror("Error in forking replay");
+            return;
         }
-        int remaining_time = period % interval;
-        sleep(remaining_time);
+        else if (pid == 0)
+        {
+            setpgid(0, 0);
+
+            signal(SIGINT, SIG_DFL);
+            signal(SIGTSTP, SIG_DFL);
+            // signal(SIGTTIN, SIG_IGN);
+            // signal(SIGTTOU, SIG_IGN);
+            int number_of_time = period / interval;
+            for (int x = 0; x < number_of_time; x++)
+            {
+                sleep(interval);
+                execute_command(args[0], args + 1, i - 1, history_file);
+            }
+            int remaining_time = period % interval;
+            sleep(remaining_time);
+            exit(1);
+        }
+        else
+        {
+            // bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
+            // for (int y = 0; y < i + 1; y++)
+            // {
+            //     bg_jobs[proc_no].agrv[y] = calloc(strlen(args[y]) + 10, sizeof(char));
+            //     strcpy(bg_jobs[proc_no].agrv[y], args[y]);
+            // }
+            // bg_jobs[proc_no].agrv[i + 2] = NULL;
+            // bg_jobs[proc_no].pid = pid;
+            // bg_jobs[proc_no].number_of_args = i + 1;
+            // proc_no++;
+            // printf("%d\n", pid);
+            printf("The commands are running in the background :')\n");
+        }
     }
 
     else if (strcmp(command, "baywatch") == 0)
