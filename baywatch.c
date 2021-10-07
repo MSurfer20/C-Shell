@@ -1,6 +1,19 @@
 #include "baywatch.h"
 #include "headers.h"
 
+bool startswithz(char *str1, char *str2)
+{
+    int len1 = strlen(str1), len2 = strlen(str2);
+    if (len1 < len2)
+        return false;
+    for (int x = 0; x < len2; x++)
+    {
+        if (str1[x] != str2[x])
+            return false;
+    }
+    return true;
+}
+
 void diez(const char *s)
 {
     // perror(s);
@@ -108,20 +121,24 @@ void interrupt(int time)
         char c;
         setbuf(stdout, NULL);
         enableRawModez();
-        while (read(STDIN_FILENO, &c, 1) == 1)
+        bool exit_flag = true;
+        while (exit_flag)
         {
-            if (iscntrl(c))
+            while (read(STDIN_FILENO, &c, 1) == 1)
             {
-            }
-            else
-            {
-                if (c == 113)
+                if (iscntrl(c))
                 {
-                    if (kill(pid, SIGTERM) < 0)
-                        kill(pid, SIGKILL);
-                    return;
                 }
-                break;
+                else
+                {
+                    if (c == 113)
+                    {
+                        if (kill(pid, SIGTERM) < 0)
+                            kill(pid, SIGKILL);
+                    }
+                    exit_flag = false;
+                    break;
+                }
             }
         }
         disableRawModez();
@@ -180,10 +197,85 @@ void newborn(int time)
     }
 }
 
+void dirty(int time)
+{
+    int pid = fork();
+    if (pid < 0)
+    {
+        perror("Error in parallelizing");
+        return;
+    }
+    else if (pid == 0)
+    {
+        while (true)
+        {
+            FILE *fil = fopen("/proc/meminfo", "r");
+            size_t len = 0;
+            ssize_t read;
+            char *line = NULL;
+            if (fil == NULL)
+            {
+                perror("Error opening interrupts file");
+                return;
+            }
+            while (read = getline(&line, &len, fil) != -1)
+            {
+                if (startswithz(line, "Dirty:"))
+                {
+                    bool started = false;
+                    char a[1000];
+                    int x = 0, y = 0;
+                    for (x = 6; x < strlen(line); x++)
+                    {
+                        if (line[x] != ' ' && line[x] != '\t' && line[x] != '\n')
+                        {
+                            started = true;
+                            // a[y] = line[x];
+                            // y++;
+                        }
+                        if (started)
+                            a[y] = line[x], y++;
+                    }
+                    a[y] = '\0';
+                    printf("%s", a);
+                    break;
+                }
+            }
+            sleep(time);
+            fclose(fil);
+        }
+    }
+    else
+    {
+        char c;
+        setbuf(stdout, NULL);
+        enableRawModez();
+        while (read(STDIN_FILENO, &c, 1) == 1)
+        {
+            if (iscntrl(c))
+            {
+            }
+            else
+            {
+                if (c == 113)
+                {
+                    if (kill(pid, SIGTERM) < 0)
+                        kill(pid, SIGKILL);
+                    return;
+                }
+                break;
+            }
+        }
+        disableRawModez();
+    }
+}
+
 void baywatch(int time, int command_id)
 {
     if (command_id == 0)
         interrupt(time);
     else if (command_id == 1)
         newborn(time);
+    else if (command_id == 2)
+        dirty(time);
 }

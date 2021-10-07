@@ -426,7 +426,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
             else if (strcmp(args[x], "newborn") == 0)
                 command_id = 1;
             else if (strcmp(args[x], "dirty") == 0)
-                command_id = 3;
+                command_id = 2;
         }
         baywatch(time, command_id);
     }
