@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
- 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct  7 08:45:07 2021
+# Make data base, printed on Thu Oct  7 17:51:03 2021
 
 # Variables
 
@@ -49,7 +47,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:56370
+JOURNAL_STREAM = 8:54129
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -69,11 +67,11 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1943
+MANAGERPID = 1935
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-7e93c023-68ae-4e0c-8a71-edc558323187.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-03ecd623-8c33-407a-8748-dadb5491b327.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
@@ -85,7 +83,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2179,unix/suyash:/tmp/.ICE-unix/2179
+SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2173,unix/suyash:/tmp/.ICE-unix/2173
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -95,7 +93,7 @@ VSCODE_LOG_STACK = false
 # environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=29f12441-f453-437b-8757-4e5645c4afac&iid=29f12441-f453-437b-8757-4e5645c4afac&sid=29f12441-f453-437b-8757-4e5645c4afac","uploadToServer":true}
 # environment
-INVOCATION_ID = 1f5a528f95f04519adcf86071f85b5ba
+INVOCATION_ID = 0b70f50ffe7c48af8e768404034f0297
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -105,7 +103,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5820
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4289
 # automatic
 %F = $(notdir $%)
 # environment
@@ -117,7 +115,7 @@ PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assig
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2137
+SSH_AGENT_PID = 2131
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -223,7 +221,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5820
+VSCODE_PID = 4289
 # variable set hash-table stats:
 # Load=106/1024=10%, Rehash=0, Collisions=13/131=10%
 
@@ -233,9 +231,9 @@ VSCODE_PID = 5820
 
 # Directories
 
-# . (device 2050, inode 20972362): 49 files, no impossibilities.
+# . (device 2050, inode 20972362): 53 files, no impossibilities.
 
-# 49 files, no impossibilities in 1 directories.
+# 53 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -253,7 +251,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-06 23:27:07.309845828
+#  Last modified 2021-10-07 14:18:40.828099422
 #  File has been updated.
 #  Successfully updated.
 
@@ -278,12 +276,15 @@ default:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 55 / storage = 424 B / avg = 7 B
-# current buf: size = 8162 B / used = 424 B / count = 55 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 59 / storage = 478 B / avg = 8 B
+# current buf: size = 8162 B / used = 478 B / count = 59 / avg = 8 B
 
-# strcache performance: lookups = 60 / hit rate = 8%
+# strcache performance: lookups = 64 / hit rate = 7%
 # hash-table stats:
-# Load=55/8192=1%, Rehash=0, Collisions=1/60=2%
-# Finished Make data base on Thu Oct  7 08:45:07 2021
+ 
+make: *** No rule to make target 'all'.  Stop.
+ 
+# Load=59/8192=1%, Rehash=0, Collisions=1/64=2%
+# Finished Make data base on Thu Oct  7 17:51:03 2021
 
  

@@ -24,7 +24,6 @@ void ignoresignal(int signal)
 
 void exitfunction(int signal)
 {
-    printf("BRUH");
     exit(0);
 }
 
