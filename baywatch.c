@@ -167,7 +167,7 @@ void newborn(int time)
             char a[1000], b[1000], c[1000], d[1000], e[1000];
             fscanf(fil, "%s %s %s %s %s", a, b, c, d, e);
             // printf("%s\n", line);
-            printf("PID of last process created: %s\n", e);
+            printf("%s\n", e);
             sleep(time);
             fclose(fil);
         }
