@@ -489,7 +489,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 }
 
 void stop_signal()
-{
+{hgj
     // printf("YASSSSS");
     if (getpid() == shell_pid || curr_pid == -1)
         return;
