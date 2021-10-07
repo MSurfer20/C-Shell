@@ -135,9 +135,9 @@ void interrupt(int time)
                     {
                         if (kill(pid, SIGTERM) < 0)
                             kill(pid, SIGKILL);
+                        exit_flag = false;
+                        break;
                     }
-                    exit_flag = false;
-                    break;
                 }
             }
         }
@@ -177,20 +177,24 @@ void newborn(int time)
         char c;
         setbuf(stdout, NULL);
         enableRawModez();
-        while (read(STDIN_FILENO, &c, 1) == 1)
+        bool exit_flag = true;
+        while (exit_flag)
         {
-            if (iscntrl(c))
+            while (read(STDIN_FILENO, &c, 1) == 1)
             {
-            }
-            else
-            {
-                if (c == 113)
+                if (iscntrl(c))
                 {
-                    if (kill(pid, SIGTERM) < 0)
-                        kill(pid, SIGKILL);
-                    return;
                 }
-                break;
+                else
+                {
+                    if (c == 113)
+                    {
+                        if (kill(pid, SIGTERM) < 0)
+                            kill(pid, SIGKILL);
+                        exit_flag = false;
+                        break;
+                    }
+                }
             }
         }
         disableRawModez();
@@ -250,20 +254,24 @@ void dirty(int time)
         char c;
         setbuf(stdout, NULL);
         enableRawModez();
-        while (read(STDIN_FILENO, &c, 1) == 1)
+        bool exit_flag = true;
+        while (exit_flag)
         {
-            if (iscntrl(c))
+            while (read(STDIN_FILENO, &c, 1) == 1)
             {
-            }
-            else
-            {
-                if (c == 113)
+                if (iscntrl(c))
                 {
-                    if (kill(pid, SIGTERM) < 0)
-                        kill(pid, SIGKILL);
-                    return;
                 }
-                break;
+                else
+                {
+                    if (c == 113)
+                    {
+                        if (kill(pid, SIGTERM) < 0)
+                            kill(pid, SIGKILL);
+                        exit_flag = false;
+                        break;
+                    }
+                }
             }
         }
         disableRawModez();
