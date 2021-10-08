@@ -37,7 +37,7 @@ void fg(int job_no)
     // printf("\n%d\n", getpgrp());
     // printf("BRUHHH");
     tcsetpgrp(0, getpgrp());
-    // signal(SIGTTIN, SIG_DFL);
+    signal(SIGTTIN, SIG_DFL);
     signal(SIGTTOU, SIG_DFL);
     curr_pid = pid;
     curr_job_args = job_args;

@@ -484,8 +484,14 @@ void execute_command(char *command, char **args, int i, char *history_file)
         execute_process(command, i, args, backround_process, home_dir);
     }
 
-    dup2(standard_inp, STDIN_FILENO);
-    dup2(standard_output, STDOUT_FILENO);
+    
+    fflush(stdin);
+    fflush(stdout);
+
+    if (input_redir)
+        dup2(standard_inp, STDIN_FILENO);
+    if (output_redir == 1 || output_redir == 2)
+        dup2(standard_output, STDOUT_FILENO);
 }
 
 void stop_signal()
