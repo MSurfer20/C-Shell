@@ -413,20 +413,24 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
             signal(SIGINT, SIG_DFL);
             signal(SIGTSTP, SIG_DFL);
-            // signal(SIGTTIN, SIG_IGN);
-            // signal(SIGTTOU, SIG_IGN);
+            signal(SIGTTIN, SIG_IGN);
+            signal(SIGTTOU, SIG_IGN);
             int number_of_time = period / interval;
-            for (int x = 0; x < number_of_time; x++)
+            for (int z = 0; z < number_of_time; z++)
             {
                 sleep(interval);
                 execute_command(args[0], args + 1, i - 1, history_file);
             }
             int remaining_time = period % interval;
             sleep(remaining_time);
-            exit(1);
+            signal(SIGTTIN, SIG_DFL);
+            signal(SIGTTOU, SIG_DFL);
+            exit(0);
         }
         else
         {
+            signal(SIGTTOU, SIG_IGN);
+            signal(SIGTTIN, SIG_IGN);
             // bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
             // for (int y = 0; y < i + 1; y++)
             // {
@@ -484,7 +488,6 @@ void execute_command(char *command, char **args, int i, char *history_file)
         execute_process(command, i, args, backround_process, home_dir);
     }
 
-    
     fflush(stdin);
     fflush(stdout);
 
@@ -646,6 +649,8 @@ int main()
     signal(SIGINT, kill_proc);
     signal(SIGTSTP, stop_signal);
     signal(SIGILL, exitfunction);
+    signal(SIGTTOU, SIG_IGN);
+    signal(SIGTTIN, SIG_IGN);
 
     char *actual_home_path = getenv("HOME");
     char *history_file = calloc(1000, sizeof(char));
