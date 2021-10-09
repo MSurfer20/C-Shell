@@ -786,7 +786,8 @@ int main()
                 // }
                 else if (c == 4)
                 {
-                    return 0;
+                    printf("Exiting shell.\n");
+                    exit(0);
                 }
                 else
                 {

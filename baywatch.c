@@ -87,10 +87,17 @@ void interrupt(int time)
                 return;
             }
             char line[1000];
-            fgets(line, 1000, fil);
-            fgets(line, 1000, fil);
-            fgets(line, 1000, fil);
+            // fgets(line, 1000, fil);
+            // fgets(line, 1000, fil);
+            // fgets(line, 1000, fil);
             // printf("%s\n", line);
+            bool line_found = false;
+            while (!line_found)
+            {
+                fgets(line, 1000, fil);
+                if (strstr(line, "1:") != NULL && strstr(line, "i8042") != NULL)
+                    line_found = true;
+            }
             int line_len = strlen(line);
             bool flag = false;
             for (int x = 0; x < line_len; x++)
