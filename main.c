@@ -40,7 +40,7 @@ void exitfunction(int signal)
 
 void die(const char *s)
 {
-    perror(s);
+    // perror(s);
     exit(1);
 }
 
@@ -680,7 +680,12 @@ void stop_signal()
         proc_no++;
         printf("%d pushed to background\n", curr_pid);
     }
-    kill(curr_pid, SIGTSTP);
+    int kill_return = kill(curr_pid, SIGTSTP);
+    if (kill_return == -1)
+    {
+        perror("Error sending process to background.\n");
+        return;
+    }
 }
 
 void kill_proc()
