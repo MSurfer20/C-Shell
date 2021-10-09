@@ -794,8 +794,8 @@ int main()
     signal(SIGINT, kill_proc);
     signal(SIGTSTP, stop_signal);
     signal(SIGILL, exitfunction);
-    signal(SIGTTOU, SIG_IGN);
-    signal(SIGTTIN, SIG_IGN);
+    // signal(SIGTTOU, SIG_IGN);
+    // signal(SIGTTIN, SIG_IGN);
 
     char *actual_home_path = getenv("HOME");
     char *history_file = calloc(1000, sizeof(char));
