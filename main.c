@@ -29,7 +29,7 @@ void exitfunction(int signal)
 
 void die(const char *s)
 {
-    // perror(s);
+    perror(s);
     exit(1);
 }
 
@@ -654,7 +654,7 @@ void parse_pipe(char *each_command, char *history_file)
                 dup2(pipe_fd[1], STDOUT_FILENO);
             close(pipe_fd[0]);
             run_command(token, history_file);
-            exit(EXIT_SUCCESS);
+            _exit(EXIT_SUCCESS);
         }
         else
         {
