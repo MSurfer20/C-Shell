@@ -22,6 +22,17 @@ void ignoresignal(int signal)
     return;
 }
 
+bool check_if_number(char *st)
+{
+    int l = strlen(st);
+    for (int ab = 0; ab < l; ab++)
+    {
+        if (!isdigit(st[ab]))
+            return 0;
+    }
+    return 1;
+}
+
 void exitfunction(int signal)
 {
     exit(0);
@@ -376,6 +387,21 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "sig") == 0)
     {
+        if (i != 2)
+        {
+            printf("Number of arguments must be 2.\n");
+            return;
+        }
+        if (!check_if_number(args[0]))
+        {
+            printf("Job no must be a number.\n");
+            return;
+        }
+        if (!check_if_number(args[1]))
+        {
+            printf("Signal must be a number.\n");
+            return;
+        }
         int job_no = atoi(args[0]);
         int signal_number = atoi(args[1]);
         sig(job_no, signal_number);
