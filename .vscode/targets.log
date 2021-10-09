@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
- 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Oct  8 00:28:16 2021
+# Make data base, printed on Sun Oct 10 00:24:22 2021
 
 # Variables
 
@@ -49,7 +47,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:49031
+JOURNAL_STREAM = 8:58456
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -69,23 +67,23 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1530
+MANAGERPID = 1958
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-137352c6-bb46-43cb-bebf-a098faaf42e1.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-0a6ca9c4-e108-4792-9b5d-8e8838870522.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/suyash/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/suyash/.pyenv/plugins/pyenv-virtualenv/shims:/home/suyash/.pyenv/bin:/home/suyash/.pyenv/shims:/opt/pyenv/plugins/pyenv-virtualenv/bin:/home/suyash/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2163,unix/suyash:/tmp/.ICE-unix/2163
+SESSION_MANAGER = local/suyash:@/tmp/.ICE-unix/2196,unix/suyash:/tmp/.ICE-unix/2196
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -95,7 +93,7 @@ VSCODE_LOG_STACK = false
 # environment
 VSCODE_CRASH_REPORTER_START_OPTIONS = {"companyName":"Microsoft","productName":"VSCode","submitURL":"appcenter://code?aid=fba07a4d-84bd-4fc8-a125-9640fc8ce171&uid=29f12441-f453-437b-8757-4e5645c4afac&iid=29f12441-f453-437b-8757-4e5645c4afac&sid=29f12441-f453-437b-8757-4e5645c4afac","uploadToServer":true}
 # environment
-INVOCATION_ID = 26b27cc1122245ba94b6a63174522d19
+INVOCATION_ID = 556c4414faf449a4beac690679e642c3
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -105,7 +103,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2965
+GIO_LAUNCHED_DESKTOP_FILE_PID = 62214
 # automatic
 %F = $(notdir $%)
 # environment
@@ -117,7 +115,7 @@ PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assig
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2120
+SSH_AGENT_PID = 2154
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -214,6 +212,8 @@ SUFFIXES :=
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
 WINDOWPATH = 2
+# environment
+PYENV_VIRTUALENV_INIT = 1
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
 # environment
@@ -223,9 +223,9 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2965
+VSCODE_PID = 62214
 # variable set hash-table stats:
-# Load=106/1024=10%, Rehash=0, Collisions=13/131=10%
+# Load=107/1024=10%, Rehash=0, Collisions=13/132=10%
 
 # Pattern-specific Variable Values
 
@@ -233,9 +233,9 @@ VSCODE_PID = 2965
 
 # Directories
 
-# . (device 2050, inode 20972362): 53 files, no impossibilities.
+# . (device 2050, inode 20972362): 54 files, no impossibilities.
 
-# 53 files, no impossibilities in 1 directories.
+# 54 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -253,7 +253,7 @@ all:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-07 14:18:40.828099422
+#  Last modified 2021-10-08 01:56:09.706389535
 #  File has been updated.
 #  Successfully updated.
 
@@ -278,13 +278,15 @@ default:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 59 / storage = 479 B / avg = 8 B
-# current buf: size = 8162 B / used = 479 B / count = 59 / avg = 8 B
-
-# strcache performance: lookups = 64 / hit rate = 7%
-# hash-table stats:
-# Load=59/8192=1%, Rehash=0, Collisions=1/64=2%
-# Finished Make data base on Fri Oct  8 00:28:16 2021
+# strcache buffers: 1 (0) / strings = 60 / storage = 444 B / avg = 7 B
  
+make: *** No rule to make target 'all'.  Stop.
+ 
+# current buf: size = 8162 B / used = 444 B / count = 60 / avg = 7 B
+
+# strcache performance: lookups = 65 / hit rate = 7%
+# hash-table stats:
+# Load=60/8192=1%, Rehash=0, Collisions=2/65=3%
+# Finished Make data base on Sun Oct 10 00:24:22 2021
 
  

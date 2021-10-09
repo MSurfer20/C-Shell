@@ -401,49 +401,96 @@ void execute_command(char *command, char **args, int i, char *history_file)
         // for (int x = 0; x < i; x++)
         //     printf("%s ", args[x]);
         // printf("\n%d %d", period, interval);
-        pid_t pid = fork();
-        if (pid < 0)
-        {
-            perror("Error in forking replay");
-            return;
-        }
-        else if (pid == 0)
-        {
-            setpgid(0, 0);
 
-            signal(SIGINT, SIG_DFL);
-            signal(SIGTSTP, SIG_DFL);
-            signal(SIGTTIN, SIG_IGN);
-            signal(SIGTTOU, SIG_IGN);
-            int number_of_time = period / interval;
-            for (int z = 0; z < number_of_time; z++)
-            {
-                sleep(interval);
-                execute_command(args[0], args + 1, i - 1, history_file);
-            }
-            int remaining_time = period % interval;
-            sleep(remaining_time);
-            signal(SIGTTIN, SIG_DFL);
-            signal(SIGTTOU, SIG_DFL);
-            exit(0);
-        }
-        else
+        //----------------------------------
+        // pid_t pid = fork();
+        // if (pid < 0)
+        // {
+        //     perror("Error in forking replay");
+        //     return;
+        // }
+        // else if (pid == 0)
+        // {
+        //     setpgid(0, 0);
+
+        //     signal(SIGINT, SIG_DFL);
+        //     signal(SIGTSTP, SIG_DFL);
+        //     signal(SIGTTIN, SIG_IGN);
+        //     signal(SIGTTOU, SIG_IGN);
+        //     int number_of_time = period / interval;
+        //     for (int z = 0; z < number_of_time; z++)
+        //     {
+        //         sleep(interval);
+        //         execute_command(args[0], args + 1, i - 1, history_file);
+        //     }
+        //     int remaining_time = period % interval;
+        //     sleep(remaining_time);
+        //     signal(SIGTTIN, SIG_DFL);
+        //     signal(SIGTTOU, SIG_DFL);
+        //     exit(0);
+        // }
+        // else
+        // {
+        //     signal(SIGTTOU, SIG_IGN);
+        //     signal(SIGTTIN, SIG_IGN);
+        //     // bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
+        //     // for (int y = 0; y < i + 1; y++)
+        //     // {
+        //     //     bg_jobs[proc_no].agrv[y] = calloc(strlen(args[y]) + 10, sizeof(char));
+        //     //     strcpy(bg_jobs[proc_no].agrv[y], args[y]);
+        //     // }
+        //     // bg_jobs[proc_no].agrv[i + 2] = NULL;
+        //     // bg_jobs[proc_no].pid = pid;
+        //     // bg_jobs[proc_no].number_of_args = i + 1;
+        //     // proc_no++;
+        //     // printf("%d\n", pid);
+        //     printf("The commands are running in the background :')\n");
+        // }
+        // char *pass_command[1000];
+        // int repeat_length = strlen(args[0]);
+        // for (int ab = 0; ab < repeat_length; ab++)
+        // {
+        //     if (!isdigit(args[0][ab]))
+        //     {
+        //         printf("Second argument must be an integer.");
+        //         return;
+        //     }
+        // }
+        // int command_count = atoi(args[0]);
+        // for (int x = 0; x < command_count; x++)
+        // {
+        //     for (int y = 2; y < i; y++)
+        //     {
+        //         pass_command[y - 2] = calloc(strlen(args[y]) + 20, sizeof(char));
+        //         strcpy(pass_command[y - 2], args[y]);
+        //     }
+        //     int bc = i - 2;
+        //     if (i - 2 < 0)
+        //         bc = 0;
+        //     execute_command(args[1], pass_command, bc, history_file);
+        //     for (int y = 2; y < i; y++)
+        //     {
+        //         free(pass_command[y - 2]);
+        //     }
+        // }
+        //-------------------------------------------------------------------
+
+        int number_of_time = period / interval;
+        char *pass_command[1000];
+        for (int z = 0; z < number_of_time; z++)
         {
-            signal(SIGTTOU, SIG_IGN);
-            signal(SIGTTIN, SIG_IGN);
-            // bg_jobs[proc_no].agrv = calloc(i + 4, sizeof(char *));
-            // for (int y = 0; y < i + 1; y++)
-            // {
-            //     bg_jobs[proc_no].agrv[y] = calloc(strlen(args[y]) + 10, sizeof(char));
-            //     strcpy(bg_jobs[proc_no].agrv[y], args[y]);
-            // }
-            // bg_jobs[proc_no].agrv[i + 2] = NULL;
-            // bg_jobs[proc_no].pid = pid;
-            // bg_jobs[proc_no].number_of_args = i + 1;
-            // proc_no++;
-            // printf("%d\n", pid);
-            printf("The commands are running in the background :')\n");
+            sleep(interval);
+            for (int y = 1; y < i; y++)
+            {
+                pass_command[y - 1] = calloc(strlen(args[y]) + 20, sizeof(char));
+                strcpy(pass_command[y - 1], args[y]);
+            }
+            execute_command(args[0], pass_command, i - 1, history_file);
+            for (int y = 1; y < i; y++)
+                free(pass_command[y - 1]);
         }
+        int remaining_time = period % interval;
+        sleep(remaining_time);
     }
 
     else if (strcmp(command, "baywatch") == 0)
