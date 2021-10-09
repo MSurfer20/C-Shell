@@ -441,7 +441,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "replay") == 0)
     {
-        int interval = 3, period = 6;
+        int interval = -1, period = -1;
         for (int x = 0; x < i;)
         {
             if (strcmp(args[x], "-command") == 0)
@@ -453,6 +453,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
             }
             else if (strcmp(args[x], "-interval") == 0)
             {
+                if (!check_if_number(args[x + 1]))
+                {
+                    printf("Interval must be a number.\n");
+                    return;
+                }
                 interval = atoi(args[x + 1]);
                 for (int y = x; y < i - 2; y++)
                     args[y] = args[y + 2];
@@ -461,6 +466,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
             }
             else if (strcmp(args[x], "-period") == 0)
             {
+                if (!check_if_number(args[x + 1]))
+                {
+                    printf("Period must be a number.\n");
+                    return;
+                }
                 period = atoi(args[x + 1]);
                 for (int y = x; y < i - 2; y++)
                     args[y] = args[y + 2];
@@ -470,10 +480,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
             else
                 x++;
         }
-        // printf("%d\n", i);
-        // for (int x = 0; x < i; x++)
-        //     printf("%s ", args[x]);
-        // printf("\n%d %d", period, interval);
+        if (interval == -1 || period == -1)
+        {
+            printf("Error: Please specify period and interval\n");
+            return;
+        }
 
         //----------------------------------
         // pid_t pid = fork();
@@ -568,11 +579,16 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "baywatch") == 0)
     {
-        int time = 1, command_id = 0;
+        int time = 1, command_id = -1;
         for (int x = 0; x < i; x++)
         {
             if (strcmp(args[x], "-n") == 0)
             {
+                if (!check_if_number(args[x + 1]))
+                {
+                    printf("The time must be a number.\n");
+                    return;
+                }
                 time = atoi(args[x + 1]);
             }
             else if (strcmp(args[x], "interrupt") == 0)
@@ -581,6 +597,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
                 command_id = 1;
             else if (strcmp(args[x], "dirty") == 0)
                 command_id = 2;
+        }
+        if (command_id == -1)
+        {
+            printf("Please enter a valid argument for baywatch.\n");
+            return;
         }
         baywatch(time, command_id);
     }
