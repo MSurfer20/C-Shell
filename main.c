@@ -685,9 +685,21 @@ void parse_pipe(char *each_command, char *history_file)
         }
         else if (child_command_proc == 0)
         {
-            dup2(input_fd, STDIN_FILENO);
+            int dup_return = dup2(input_fd, STDIN_FILENO);
+            if (dup_return == -1)
+            {
+                perror("Error in copying FDs");
+                return;
+            }
             if (command_no != pipe_count)
-                dup2(pipe_fd[1], STDOUT_FILENO);
+            {
+                int dup2_return = dup2(pipe_fd[1], STDOUT_FILENO);
+                if (dup2_return == -1)
+                {
+                    perror("Error in copying FDs");
+                    return;
+                }
+            }
             close(pipe_fd[0]);
             run_command(token, history_file);
             _exit(EXIT_SUCCESS);
@@ -702,8 +714,18 @@ void parse_pipe(char *each_command, char *history_file)
         token = strtok_r(NULL, "|", &savepointer3);
         command_no += 1;
     }
-    dup2(save_in, STDIN_FILENO);
-    dup2(saved_output, STDOUT_FILENO);
+    int dup_return = dup2(save_in, STDIN_FILENO);
+    if (dup_return < 0)
+    {
+        perror("Error in copying FDs");
+        return;
+    }
+    dup_return = dup2(saved_output, STDOUT_FILENO);
+    if (dup_return < 0)
+    {
+        perror("Error in copying FDs");
+        return;
+    }
 }
 
 int main()
