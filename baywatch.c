@@ -69,6 +69,7 @@ void interrupt(int time)
     char line[1000];
     fgets(line, 1000, fil);
     printf("%s\n", line);
+    fclose(fil);
 
     int pid = fork();
     if (pid < 0)
