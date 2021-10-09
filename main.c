@@ -414,6 +414,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
             printf("Error: Number of arguments should be exactly 1.\n");
             return;
         }
+        if (!check_if_number(args[0]))
+        {
+            printf("Job no must be a number.\n");
+            return;
+        }
         int job_no = atoi(args[0]);
         fg(job_no);
     }
@@ -423,6 +428,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
         if (i != 1)
         {
             printf("Error: Number of arguments should be exactly 1.\n");
+            return;
+        }
+        if (!check_if_number(args[0]))
+        {
+            printf("Job no must be a number.\n");
             return;
         }
         int job_no = atoi(args[0]);
