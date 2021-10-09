@@ -75,7 +75,15 @@ void execute_command(char *command, char **args, int i, char *history_file)
 {
     char input_file[1000], output_file[1000];
     int standard_inp = dup(STDIN_FILENO);
+    if (standard_inp == -1)
+    {
+        perror("Error in copying STDIN.");
+    }
     int standard_output = dup(STDOUT_FILENO);
+    if (standard_output == -1)
+    {
+        perror("Error in copying STDIN.");
+    }
     int input_redir = 0, output_redir = 0;
 
     for (int x = 0; x < i; x++)
@@ -129,7 +137,12 @@ void execute_command(char *command, char **args, int i, char *history_file)
             perror("Error opening input file");
             return;
         }
-        dup2(inp_fd, 0);
+        int dup_return = dup2(inp_fd, 0);
+        if (dup_return == -1)
+        {
+            perror("Error in copying FDs.");
+            return;
+        }
         close(inp_fd);
     }
 
@@ -141,7 +154,12 @@ void execute_command(char *command, char **args, int i, char *history_file)
             perror("Error opening output file");
             return;
         }
-        dup2(op_fd, 1);
+        int dup_return = dup2(op_fd, 1);
+        if (dup_return == -1)
+        {
+            perror("Error in copying FDs.");
+            return;
+        }
         close(op_fd);
     }
 
@@ -153,7 +171,12 @@ void execute_command(char *command, char **args, int i, char *history_file)
             perror("Error opening output file");
             return;
         }
-        dup2(op_fd, 1);
+        int dup_return = dup2(op_fd, 1);
+        if (dup_return == -1)
+        {
+            perror("Error in copying FDs.");
+            return;
+        }
         close(op_fd);
     }
 
@@ -539,9 +562,22 @@ void execute_command(char *command, char **args, int i, char *history_file)
     fflush(stdout);
 
     if (input_redir)
-        dup2(standard_inp, STDIN_FILENO);
+    {
+        int dup2_return = dup2(standard_inp, STDIN_FILENO);
+        if (dup2_return == -1)
+        {
+            perror("Error in copying FDs.");
+        }
+    }
     if (output_redir == 1 || output_redir == 2)
-        dup2(standard_output, STDOUT_FILENO);
+
+    {
+        int dup2_return = dup2(standard_output, STDOUT_FILENO);
+        if (dup2_return == -1)
+        {
+            perror("Error in copying FDs.");
+        }
+    }
 }
 
 void stop_signal()
