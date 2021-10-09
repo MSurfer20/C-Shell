@@ -8,5 +8,10 @@ void bg(int job_no)
         printf("Error: Job number is invalid.\n");
         return;
     }
-    kill(bg_jobs[job_no - 1].pid, SIGCONT);
+    int kill_status = kill(bg_jobs[job_no - 1].pid, SIGCONT);
+    if (kill_status == -1)
+    {
+        perror("Error in sending signal to process.\n");
+        return;
+    }
 }
