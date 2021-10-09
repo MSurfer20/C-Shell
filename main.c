@@ -351,9 +351,23 @@ void execute_command(char *command, char **args, int i, char *history_file)
                 for (int y = 0; y < ag_len; y++)
                 {
                     if (ag[y] == 's')
+                    {
+                        if (job_type == 2)
+                        {
+                            printf("Please enter only one flag.\n");
+                            return;
+                        }
                         job_type = 1;
+                    }
                     else if (ag[y] == 'r')
+                    {
+                        if (job_type == 1)
+                        {
+                            printf("Please enter only one flag.\n");
+                            return;
+                        }
                         job_type = 2;
+                    }
                 }
             }
         }
