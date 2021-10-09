@@ -1,3 +1,0 @@
-new_op.txt
-output.txt
-a.txt
