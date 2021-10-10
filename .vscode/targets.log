@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
- 
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Oct 10 12:06:05 2021
+# Make data base, printed on Sun Oct 10 13:32:41 2021
 
 # Variables
 
@@ -41,7 +39,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2
+CURDIR := /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006
 # makefile
 SHELL = /bin/sh
 # environment
@@ -73,7 +71,7 @@ MANAGERPID = 1981
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-b09c5305-c2c1-461c-9892-d4a881612e70.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f46e9953-dab6-4910-870d-c81273d01f1f.sock
 # environment
 VSCODE_CWD = /home/suyash
 # default
@@ -113,7 +111,7 @@ DISPLAY = :0
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006_Assignment2
+PWD = /home/suyash/Assignments/3-1/OS and Networks/Assignment-2/2019114006
 # default
 .LOADED := 
 # environment
@@ -235,9 +233,9 @@ VSCODE_PID = 29642
 
 # Directories
 
-# . (device 2050, inode 20972362): 38 files, no impossibilities.
+# . (device 2050, inode 20972362): 37 files, no impossibilities.
 
-# 38 files, no impossibilities in 1 directories.
+# 37 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -280,12 +278,15 @@ default:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 44 / storage = 346 B / avg = 7 B
-# current buf: size = 8162 B / used = 346 B / count = 44 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 43 / storage = 318 B / avg = 7 B
+ 
+make: *** No rule to make target 'all'.  Stop.
+ 
+# current buf: size = 8162 B / used = 318 B / count = 43 / avg = 7 B
 
-# strcache performance: lookups = 49 / hit rate = 10%
+# strcache performance: lookups = 48 / hit rate = 10%
 # hash-table stats:
-# Load=44/8192=1%, Rehash=0, Collisions=1/49=2%
-# Finished Make data base on Sun Oct 10 12:06:05 2021
+# Load=43/8192=1%, Rehash=0, Collisions=1/48=2%
+# Finished Make data base on Sun Oct 10 13:32:41 2021
 
  

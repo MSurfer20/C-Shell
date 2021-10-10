@@ -33,7 +33,7 @@ void push_to_bkg(int signal)
         bg_jobs[proc_no].pid = curr_pid;
         bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
         proc_no++;
-        printf("%d pushed to background\n", curr_pid);
+        printf(" %d pushed to background\n", curr_pid);
     }
     kill(curr_pid, SIGTSTP);
 }
@@ -159,7 +159,7 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
                     bg_jobs[proc_no].number_of_args = i + 1;
                     proc_no++;
                 }
-                printf("%d pushed to background\n", curr_pid);
+                printf(" %d pushed to background\n", curr_pid);
                 kill(curr_pid, SIGTSTP);
             }
             // printf("\n");

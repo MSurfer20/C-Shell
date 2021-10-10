@@ -683,7 +683,7 @@ void stop_signal()
         bg_jobs[proc_no].pid = curr_pid;
         bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
         proc_no++;
-        printf("%d pushed to background\n", curr_pid);
+        printf(" %d pushed to background\n", curr_pid);
     }
     int kill_return = kill(curr_pid, SIGTSTP);
     if (kill_return == -1)

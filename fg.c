@@ -67,7 +67,7 @@ void fg(int job_no)
             bg_jobs[proc_no].number_of_args = i + 1;
             proc_no++;
         }
-        printf("%d pushed to background\n", curr_pid);
+        printf(" %d pushed to background\n", curr_pid);
         kill(curr_pid, SIGTSTP);
     }
     // printf("\n");
