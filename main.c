@@ -142,6 +142,14 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     if (input_redir)
     {
+        if (input_file[0] == '~')
+        {
+            char temp_stringz[1000];
+            // strcpy(exec_arguments[0], ".");
+            strcpy(temp_stringz, home_dir);
+            strcat(temp_stringz, input_file + 1);
+            strcpy(input_file, temp_stringz);
+        }
         int inp_fd = open(input_file, O_RDONLY);
         if (inp_fd < 0)
         {
@@ -159,6 +167,14 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     if (output_redir == 1)
     {
+        if (output_file[0] == '~')
+        {
+            char temp_stringz[1000];
+            // strcpy(exec_arguments[0], ".");
+            strcpy(temp_stringz, home_dir);
+            strcat(temp_stringz, output_file + 1);
+            strcpy(output_file, temp_stringz);
+        }
         int op_fd = open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
         if (op_fd < 0)
         {
@@ -176,6 +192,14 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     if (output_redir == 2)
     {
+        if (output_file[0] == '~')
+        {
+            char temp_stringz[1000];
+            // strcpy(exec_arguments[0], ".");
+            strcpy(temp_stringz, home_dir);
+            strcat(temp_stringz, output_file + 1);
+            strcpy(output_file, temp_stringz);
+        }
         int op_fd = open(output_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
         if (op_fd < 0)
         {

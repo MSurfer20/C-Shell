@@ -165,7 +165,12 @@ void execute_process(char *command, int i, char **args, bool backround_process, 
                     proc_no++;
                 }
                 printf(" %d pushed to background\n", curr_pid);
-                kill(curr_pid, SIGTSTP);
+                int stp_proc_status = kill(curr_pid, SIGTSTP);
+                if (stp_proc_status == -1)
+                {
+                    perror("Error stopping the process");
+                    return;
+                }
             }
             // printf("\n");
         }

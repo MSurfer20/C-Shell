@@ -32,7 +32,12 @@ void fg(int job_no)
         if (k_stat < 0)
             kill(getpid(), SIGKILL);
     }
-    kill(pid, SIGCONT);
+    int sig_cont_result = kill(pid, SIGCONT);
+    if (sig_cont_result == -1)
+    {
+        perror("Error making the process running");
+        return;
+    }
     pid_t wtpid = waitpid(pid, &status, WUNTRACED);
     // printf("\n%d\n", getpgrp());
     // printf("BRUHHH");
@@ -68,7 +73,12 @@ void fg(int job_no)
             proc_no++;
         }
         printf(" %d pushed to background\n", curr_pid);
-        kill(curr_pid, SIGTSTP);
+        int sigstp_return = kill(curr_pid, SIGTSTP);
+        if (sigstp_return == -1)
+        {
+            perror("Error stopping the process");
+            return;
+        }
     }
     // printf("\n");
 }
