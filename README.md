@@ -47,33 +47,35 @@ You must have the following installed:
 ### Command Parsing
 * Tokenized commands-The commands are also tokenized on `;`, which is given highest priority in command processing.
 * The arguments are tokenized based upon both `\t` and ` `, and so, arguments can be separated by any number of tabs and spaces, and get handled by the shell.
-* The tokens `>`, `<` and `>>` can be used for redirection of command ouputs into files as well as for redirecting inputs from files. **Note**: These MUST be space separated from the other arguments. For eg `cat < a | sort > b`.
+* The tokens `>`, `<` and `>>` can be used for redirection of command ouputs into files, appending output into files, and for redirecting inputs from files respectively. **Note**: These MUST be space separated from the other arguments. For eg `cat < a | sort > b`.
 * The token `|` can be used for piping output of one command into another command. **Note:** This doesn't work with background processes. Also, note that the pipes and redirection wait for each command to finish execution, and thus, are serially executed.
 * prompt: The prompt with the username, and the systemname(hostname) is shown along with the pwd. A function checks if the home directory is a equal to, or is a substring(followed by a `/`), such that the whole portion is replaced by `~`.
 
 ### Builtin Commands
-* cd: The `cd` command is supported with various flags like `.`, `..`, `-`, `~`. In addition, relative paths from `~`, `..` and `.` are handled too. `chdir` is used to change the directory.
-* echo: The `echo` command is implemented with the support of reducing tabs and spaces into a single space. This was achieved by tokenizing the args(already done in common for all args).
+* cd: This command allows to change the current directory. The `cd` command is supported with various flags like `.`, `..`, `-`, `~`. In addition, relative paths from `~`, `..` and `.` are handled too. `chdir` is used to change the directory.
+* echo: This command prints the arguments passed on the screen. The `echo` command is implemented with the support of reducing tabs and spaces into a single space. This was achieved by tokenizing the args(already done in common for all args).
 * history: 
     1. The history command prints all the history available(with a cap of 10).
     1. The history file is created in the actual home of the machine(found using `HOME` env variable).
     1. The history is always read and written to the file, and never stored in the program to be returned in order to support multi-session history.
     1. Also, it supports only 20 commands, after which oldest one gets removed.
-    1. The commmand also supports adding an integer argument, and then shows that many commands from the history.
+    1. The commmand also supports passing an integer argument, and then shows that many commands from the history.
 * ls:
+    1. This command is same as the bash `ls` command.
     1. The ls command supports the flags -a and -l. It also considers `-aa` or `-lll` or `-alla` as flags too, but not if any other character appears after `-`, like `-lan`. 
     1. The -l output also has `total` parameter, for which I iterated twice over the directory files.
     1. It also supports the functionality that files older than 6 months show year instead of Hours and Minutes. For this, if the difference b/w months number is >6 or if it is ==6 and the date is more than the creation date, then it is considered older than 6 months.
-* pwd: Pwd is printed from the root(`/`) of the machine. It doesn't accept any arguments, and throws error when the same are given.
-* exit: I have turned off the interrupt signals for the shell process, and in order to exit the shell, you must use the exit command.
+* pwd: This prints the present working directory of the shell. Pwd is printed from the root(`/`) of the machine. It doesn't accept any arguments, and throws error when the same are given.
+* exit: I have turned off the interrupt signals for the shell process, and in order to exit the shell, you must use the `exit` command.
 * Up arrow key: Pressing the up arrow key loops over the history command, and shows the last command on the prompt. It works only until 20(or the last command stored), after which the command doesn't change. Note that the command can be changed after it shows up on the prompt.
 
 ### Process and Job Management
 * Process:
     1. It has support for both foreground and background processes, with the proper steps(setting correct pgroups) for foreground process as well.
+    1. Use & at the end of the command to run it in background.
     1. It also has support for running processes with paths and args specified relative to `~` as well. Memory is properly handled too to ensure smooth processing.
     1. When the bg process terminate, they send the  SIGCHLD signal, which is then used to print the info about the exited process.
-* pinfo: Pinfo is supported for both the current shell, as well as with pid mentioned. the addition of `+` for foreground processes has support across various sessions and various processes, since it is implemented using pgid associations of foreground processes.
+* pinfo: Pinfo shows the information about a process. Pinfo is supported for both the current shell, as well as with pid mentioned. The addition of `+` for foreground processes has support across various sessions and various processes, since it is implemented using pgid associations of foreground processes.
 * jobs: This command prints all the running background processes in the shell, and sorts them on alphabetical order, with their PID, and state. Also, flags `-s` can be used to show stopped background processes, and `-r` flag shows the running processes. **ONLY one flag can be used at a time.**
 * sig: This sends a signal(given signal number) to a particular job.
 * fg: This command brings a background process to the foreground and sets it to running. The process gets control of the terminal on becoming foreground.
@@ -81,14 +83,14 @@ You must have the following installed:
 
 ### Signal Handling
 * CTRL+Z: This pushes a running foreground process into background, and has no effect if no foreground process exists.
-* CTRL+C: This terminates a foreground process by sending a SIGINT signal.
-* CTRL+D: This logs the user out of the shell.
+* CTRL+C: This terminates a foreground process by sending a SIGINT signal. Has no effect if there is no foreground process.
+* CTRL+D: This logs the user out of the shell. This signal is ignored if some command is being executed by the shell.
 
 ### Repeatedly executing commands
 All the commands below **work for background processes as well**
 * repeat: This command executes a command a given number of times.
 * replay: This executes a particular command repeatedly until a period of time while waiting for a certain interval before each execution.
-* baywatch: This executes either of the following commands after waiting for a fixed interval.
+* baywatch: This executes either of the following commands repeatedly after waiting for a fixed interval between every repetition, and stops only when the `q` key is pressed:
     1. interrupt: This prints the number of times the CPU(s) have been interrupted by keyboardcontroller(i8042 with IRQ 1).
     1. newborn: This displays PID of most recently created process on the system.
     1. dirty: This prints the size of the part of the memory which is dirty.
