@@ -35,7 +35,12 @@ void push_to_bkg(int signal)
         proc_no++;
         printf(" %d pushed to background\n", curr_pid);
     }
-    kill(curr_pid, SIGTSTP);
+    int kill_statusz = kill(curr_pid, SIGTSTP);
+    if (kill_statusz == -1)
+    {
+        perror("Error in stopping process");
+        return;
+    }
 }
 
 void execute_process(char *command, int i, char **args, bool backround_process, char *home_dir)

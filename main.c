@@ -699,7 +699,12 @@ void kill_proc()
         return;
     if (curr_pid != -1)
     {
-        kill(curr_pid, SIGINT);
+        int kill_status = kill(curr_pid, SIGINT);
+        if (kill_status == -1)
+        {
+            perror("Error killing process");
+            return;
+        }
     }
 }
 
