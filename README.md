@@ -3,16 +3,25 @@
 * Run `make`
 * Run `./svsh.out`
 #### Files
+* baywatch.c - Contains the functionality of the baywatch command. Includes all the commands that can be executed using baywatch, such as dirty, newborn and interrupt.
+* baywatch.h - Contains the functions needed in `baywatch.c`
+* bg.c - Contains the functionality of the bg command
+* bg.h - Contains the functions needed in `bg.c`
 * cd.c - Contains the functionality of the cd command.
 * cd.h - Defines the functions needed in `cd.c`.
 * echo.c - Contains the functionality of the echo command.
 * echo.h - Defines the functions needed in `echo.c`.
+* fg.c - Contains the functionality of the fg command
+* fg.h - Contains the functions needed in `fg.c`
+* headers.h - Contains various `#include` statements and global structs that were required for the functioning of the code.
 * history.c - Contains the functionality of the history and related functionalities. It contains the functions which can get the nth command from the history(required for arrow key task), display n commands from the history as well as a function that writes new commands into the history.
 * history.h - Defines the functions needed in `history.c`.
-* headers.h - Contains various `#include` statements and global structs that were required for the functioning of the code.
+* jobs.c - Contains the functionality of the jobs command.
+* jobs.h - Contains the functions needed in `jobs.c`
 * ls.c - Contains the functionality of the ls command. It contains a function to print the output of each file when ls -l output is given.
 * ls.h - Defines the functions needed in `ls.c`.
-* main.c - Main file of the shell, which contains code that tokenizes commands, parses their arguments and calls functions to execute them.
+* main.c - Main file of the shell, which contains code that tokenizes commands, parses their arguments and calls functions to execute them. This also includes the parsing of piping and redirection, and contains the functions that implement piping and redirection after the parsing. It also contains code that executes the repeat and replay commands, since they directly call the `execute_command` function present in the file to execute the functionality.
+* makefile - The makefile for the assignment. In order to make, simply run `make` while in the Assignment Directory.
 * pinfo.c - Contains the functionality of getting a process information.
 * pinfo.h - Defines the functions needed in `pinfo.c`.
 * process.c - Contains code that creates and executes both foreground and background processes, as well as code that is run when a child process terminates.
@@ -21,6 +30,9 @@
 * prompt.h - Contains code that defines functions of `prompt.c`
 * pwd.c - Contains code for pwd functionality
 * pwd.h - Contains code that defines functions of `pwd.c`
+* sig.c - Contains code for sig command functionality.
+* sig.h - Contains function required in `sig.c`
+* svsh.out - The executable of the shell, that gets created when you `make` in the main directory.
 
 #### Functionalities implemented
 * cd: The `cd` command is supported with various flags like `.`, `..`, `-`, `~`. In addition, relative paths from `~`, `..` and `.` are handled too. `chdir` is used to change the directory.
@@ -33,6 +45,62 @@
 * Pwd: Pwd is printed from the root(`/`) of the machine. It doesn't accept any arguments, and throws error when the same are given.
 * Tokenized commands-The commands are also tokenized on `;`, which is given highest priority in command processing.
 * exit - I have turned off the interrupt signals for the shell process, and in order to exit the shell, you must use the exit command.
+* The tokens `>`, `<` and `>>` can be used for redirection of command ouputs into files as well as for redirecting inputs from files. **Note**: These MUST be space separated from the other arguments. For eg `cat < a | sort > b`
+* The token `|` can be used for piping output of one command into another command. **Note:** This doesn't work with background processes. Also, note that the pipes and redirection wait for each command to finish execution, and thus, are serially executed.
+* jobs: This command prints all the running background processes in the shell, and sorts them on alphabetical order, with their PID, and state. Also, flags `-s` can be used to show stopped background processes, and `-r` flag shows the running processes. ONLY one flag can be used at a time.
+* sig: This sends a signal(given signal number) to a particular job.
+* fg: This command brings a background process to the foreground and sets it to running. The process gets control of the shell on becoming foreground.
+* bg: This command makes a process in background running with `SIGCONT` signal.
+* CTRL+Z: This pushes a running foreground process into background, and has no effect if no foreground process exists.
+* CTRL+C: This terminates a foreground process by sending a SIGINT signal.
+* CTRL+D: This logs the user out of the shell.
+* replay: This executes a particular command repeatedly after waiting for a certain interval.
+* baywatch: This executes either of the following commands after waiting for a fixed interval.
+1. interrupt: This prints the number of times the CPU(s) have been interrupted by keyboardcontroller(i8042 with IRQ 1).
+1. newborn: This displays PID of most recently created process on the system.
+1. dirty: This prints the size of the part of the memory which is dirty.
 
+#### Assumptions
 * A big assumption taken in this shell's working is that no arguments would contain a backpaced space(like path containing spaces as `\ `).
 * Further, a lot of reasonable assumptions have been taken while doing `calloc` for memory, ranging from 1k characters to 10k characters in most. 
+* It is assumed that piping won't be done with background processes.
+* It is assumed that `>`, `<`, `>>` and `|` would be space separated from other tokens.
+* It is asssumed that single output and input redirections would happen for each command.
+* It is assumed that replay would be used with commands with ~0 execution time.
+* It is assumed that replay wouldn't be run with foreground processes that don't have ~0 execution time.
+#### Directory Structure
+```
+.
+├── svsh.out
+├── sig.h
+├── sig.c
+├── README.md
+├── pwd.h
+├── pwd.c
+├── prompt.h
+├── prompt.c
+├── process.h
+├── process.c
+├── pinfo.h
+├── pinfo.c
+├── makefile
+├── main.c
+├── ls.h
+├── ls.c
+├── jobs.h
+├── jobs.c
+├── inf.c
+├── history.h
+├── history.c
+├── headers.h
+├── fg.h
+├── fg.c
+├── echo.h
+├── echo.c
+├── cd.h
+├── cd.c
+├── bg.h
+├── bg.c
+├── baywatch.h
+└── baywatch.c
+```
