@@ -1,4 +1,0 @@
-                    printf("Pid can only have numbers.");
-            printf("Error: Invalid number of arguments given for pinfo.\n");
-                    printf("Pid can only have numbers.");
-            printf("Error: Invalid number of arguments given for pinfo.\n");
