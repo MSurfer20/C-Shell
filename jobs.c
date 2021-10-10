@@ -56,7 +56,7 @@ void jobs(int job_type)
                 min_idx = j;
             else if (strcmp(argv[j], argv[min_idx]) == 0)
             {
-                if (pid[j] < pid[min_idx])
+                if (job_no[j] < job_no[min_idx])
                     min_idx = j;
             }
         }

@@ -579,7 +579,7 @@ void execute_command(char *command, char **args, int i, char *history_file)
 
     else if (strcmp(command, "baywatch") == 0)
     {
-        int time = 1, command_id = -1;
+        int time = -1, command_id = -1;
         for (int x = 0; x < i; x++)
         {
             if (strcmp(args[x], "-n") == 0)
@@ -601,6 +601,11 @@ void execute_command(char *command, char **args, int i, char *history_file)
         if (command_id == -1)
         {
             printf("Please enter a valid argument for baywatch.\n");
+            return;
+        }
+        if (time == -1)
+        {
+            printf("Please enter the time.\n");
             return;
         }
         baywatch(time, command_id);
