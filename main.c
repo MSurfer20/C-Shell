@@ -674,7 +674,7 @@ void stop_signal()
     {
         bg_jobs[proc_no].number_of_args = curr_job_args_count + 1;
         bg_jobs[proc_no].agrv = calloc(curr_job_args_count + 4, sizeof(char *));
-        for (int y = 0; y < curr_job_args_count; y++)
+        for (int y = 0; y < curr_job_args_count + 1; y++)
         {
             bg_jobs[proc_no].agrv[y] = calloc(strlen(curr_job_args[y]) + 10, sizeof(char));
             strcpy(bg_jobs[proc_no].agrv[y], curr_job_args[y]);
